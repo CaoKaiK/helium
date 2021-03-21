@@ -1,0 +1,78 @@
+{
+  "speculative_sec_nonce": 0,
+  "speculative_nonce": 0,
+  "sec_nonce": 0,
+  "sec_balance": 0,
+  "nonce": 0,
+  "dc_nonce": 0,
+  "dc_balance": 0,
+  "block": 769714,
+  "balance": 2942511787,
+  "address": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+  "hotspots": [
+    {
+      "lng": 6.791779321618293,
+      "lat": 51.21632315562049,
+      "timestamp_added": "2021-01-13T20:06:11.000000Z",
+      "status": {
+        "online": "online",
+        "listen_addrs": [],
+        "height": 769681
+      },
+      "reward_scale": 1.0,
+      "owner": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+      "nonce": 1,
+      "name": "bumpy-cyan-nuthatch",
+      "location": "8c1fa52b35465ff",
+      "last_poc_challenge": 769693,
+      "last_change_block": 769693,
+      "geocode": {
+        "short_street": "Vulkanstraße",
+        "short_state": "NRW",
+        "short_country": "DE",
+        "short_city": "Düsseldorf",
+        "long_street": "Vulkanstraße",
+        "long_state": "Nordrhein-Westfalen",
+        "long_country": "Germany",
+        "long_city": "Düsseldorf",
+        "city_id": "ZMO8c3NlbGRvcmZub3JkcmhlaW4td2VzdGZhbGVuZ2VybWFueQ"
+      },
+      "block_added": 674364,
+      "block": 769714,
+      "address": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx"
+    },
+    {
+      "lng": 8.388314984965238,
+      "lat": 49.00113339104018,
+      "timestamp_added": "2020-10-16T13:05:33.000000Z",
+      "status": {
+        "online": "online",
+        "listen_addrs": [
+          "/p2p/11Cj3qJQzd8n91Cys6eHZP8iRxB2ncqusyafCriKyDutQ2zX45f/p2p-circuit/p2p/11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
+        ],
+        "height": 769694
+      },
+      "reward_scale": 1.0,
+      "owner": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+      "nonce": 2,
+      "name": "unique-seaweed-yak",
+      "location": "8c1faac96ccb5ff",
+      "last_poc_challenge": 769492,
+      "last_change_block": 769492,
+      "geocode": {
+        "short_street": "Boeckhstraße",
+        "short_state": "BW",
+        "short_country": "DE",
+        "short_city": "Karlsruhe",
+        "long_street": "Boeckhstraße",
+        "long_state": "Baden-Württemberg",
+        "long_country": "Germany",
+        "long_city": "Karlsruhe",
+        "city_id": "a2FybHNydWhlYmFkZW4td8O8cnR0ZW1iZXJnZ2VybWFueQ"
+      },
+      "block_added": 545614,
+      "block": 769714,
+      "address": "11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
+    }
+  ]
+}
