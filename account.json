@@ -6,8 +6,8 @@
   "nonce": 0,
   "dc_nonce": 0,
   "dc_balance": 0,
-  "block": 781702,
-  "balance": 3261022626,
+  "block": 782835,
+  "balance": 3303484417,
   "address": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
   "hotspots": [
     {
@@ -19,15 +19,15 @@
         "listen_addrs": [
           "/ip4/37.201.225.113/tcp/48632"
         ],
-        "height": 781678
+        "height": 782820
       },
       "reward_scale": 1.0,
       "owner": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
       "nonce": 1,
       "name": "bumpy-cyan-nuthatch",
       "location": "8c1fa52b35465ff",
-      "last_poc_challenge": 781565,
-      "last_change_block": 781565,
+      "last_poc_challenge": 782626,
+      "last_change_block": 782626,
       "geocode": {
         "short_street": "Vulkanstraße",
         "short_state": "NRW",
@@ -40,7 +40,7 @@
         "city_id": "ZMO8c3NlbGRvcmZub3JkcmhlaW4td2VzdGZhbGVuZ2VybWFueQ"
       },
       "block_added": 674364,
-      "block": 781702,
+      "block": 782835,
       "address": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx"
     },
     {
@@ -50,17 +50,17 @@
       "status": {
         "online": "online",
         "listen_addrs": [
-          "/p2p/112bZTiTQPXR4r8PDeJuf5qAcmeecbKHAZajM5a5Tysq5n2VNFwN/p2p-circuit/p2p/11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
+          "/p2p/11E1HwjvXDzXJSkZ4fRixcZcLGafR4W1w8BpXbi3stWiWtyEYcV/p2p-circuit/p2p/11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
         ],
-        "height": 781663
+        "height": 782822
       },
       "reward_scale": 1.0,
       "owner": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
       "nonce": 2,
       "name": "unique-seaweed-yak",
       "location": "8c1faac96ccb5ff",
-      "last_poc_challenge": 781486,
-      "last_change_block": 781486,
+      "last_poc_challenge": 782593,
+      "last_change_block": 782593,
       "geocode": {
         "short_street": "Boeckhstraße",
         "short_state": "BW",
@@ -73,7 +73,7 @@
         "city_id": "a2FybHNydWhlYmFkZW4td8O8cnR0ZW1iZXJnZ2VybWFueQ"
       },
       "block_added": 545614,
-      "block": 781702,
+      "block": 782835,
       "address": "11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
     }
   ]
