@@ -6,8 +6,8 @@
   "nonce": 0,
   "dc_nonce": 0,
   "dc_balance": 0,
-  "block": 784522,
-  "balance": 3373657183,
+  "block": 788853,
+  "balance": 3491875090,
   "address": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
   "hotspots": [
     {
@@ -17,17 +17,17 @@
       "status": {
         "online": "online",
         "listen_addrs": [
-          "/ip4/37.201.225.113/tcp/48632"
+          "/ip4/37.201.225.113/tcp/48674"
         ],
-        "height": 784467
+        "height": 788842
       },
       "reward_scale": 1.0,
       "owner": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
       "nonce": 1,
       "name": "bumpy-cyan-nuthatch",
       "location": "8c1fa52b35465ff",
-      "last_poc_challenge": 784446,
-      "last_change_block": 784446,
+      "last_poc_challenge": 788822,
+      "last_change_block": 788822,
       "geocode": {
         "short_street": "Vulkanstraße",
         "short_state": "NRW",
@@ -40,7 +40,7 @@
         "city_id": "ZMO8c3NlbGRvcmZub3JkcmhlaW4td2VzdGZhbGVuZ2VybWFueQ"
       },
       "block_added": 674364,
-      "block": 784522,
+      "block": 788853,
       "address": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx"
     },
     {
@@ -50,17 +50,17 @@
       "status": {
         "online": "online",
         "listen_addrs": [
-          "/p2p/112ZzbcLqwCKgKPid1KmayfPjxWn1d5YzKEWvVAj4tEidKKBVmeV/p2p-circuit/p2p/11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
+          "/p2p/11Yf65tKcMdEE7driWHioWGYLAwA3NEM9nqQkYSc3dgHiqs6GMH/p2p-circuit/p2p/11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
         ],
-        "height": 784479
+        "height": 788839
       },
       "reward_scale": 1.0,
       "owner": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
       "nonce": 2,
       "name": "unique-seaweed-yak",
       "location": "8c1faac96ccb5ff",
-      "last_poc_challenge": 784485,
-      "last_change_block": 784485,
+      "last_poc_challenge": 788794,
+      "last_change_block": 788794,
       "geocode": {
         "short_street": "Boeckhstraße",
         "short_state": "BW",
@@ -73,7 +73,7 @@
         "city_id": "a2FybHNydWhlYmFkZW4td8O8cnR0ZW1iZXJnZ2VybWFueQ"
       },
       "block_added": 545614,
-      "block": 784522,
+      "block": 788853,
       "address": "11sFDmvpWXZdFKA8iE1rVRnsptu6qPYatwju8cAH4kLjXFNSx4f"
     }
   ]
