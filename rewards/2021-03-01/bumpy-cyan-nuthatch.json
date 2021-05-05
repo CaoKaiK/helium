@@ -1,0 +1,1022 @@
+[
+  {
+    "timestamp": "2021-03-31T20:55:32.000000Z",
+    "hash": "ib0sHGPFnCVUBxYkkT0l0o_pMqEqwEyDEBcg3Rjcvdw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 783696,
+    "amount": 0.05921074,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.1952,
+    "oracle_block": 783640
+  },
+  {
+    "timestamp": "2021-03-31T17:19:21.000000Z",
+    "hash": "u265tJn7MIpHp7KRwuJwerXXN1PtWpbfV3_GDe0FzjQ",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 783450,
+    "amount": 0.05463801,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.844,
+    "oracle_block": 783440
+  },
+  {
+    "timestamp": "2021-03-31T12:50:16.000000Z",
+    "hash": "LbRNeFBsR8AEvkhW0p4iNiQWbnB5frt2O2Y9unm4IvE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 783173,
+    "amount": 0.04636452,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.48505,
+    "oracle_block": 783170
+  },
+  {
+    "timestamp": "2021-03-31T09:00:09.000000Z",
+    "hash": "uu06_vT1tdhh0UTzY9ss6Hx8A3UcDQjnT1dVCBnR02c",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 782942,
+    "amount": 0.05122398,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.801625,
+    "oracle_block": 782910
+  },
+  {
+    "timestamp": "2021-03-31T04:07:44.000000Z",
+    "hash": "bTf0nuJuqFiyKr9ipzYKMVbM_nYIQ-DecXjibLjy2pg",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 782649,
+    "amount": 0.09333609,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.028405,
+    "oracle_block": 782610
+  },
+  {
+    "timestamp": "2021-03-30T23:18:21.000000Z",
+    "hash": "XY4c1Np7ak8ChP8hs-k8DjUjH-p9uvR67P-KEIWfF3c",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 782404,
+    "amount": 0.07968308,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.1116,
+    "oracle_block": 782400
+  },
+  {
+    "timestamp": "2021-03-30T18:49:22.000000Z",
+    "hash": "wGjzFFGYqnJUZaruisSzAzEkFVM0NgfM-c_UROLGlyc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 782209,
+    "amount": 0.07062237,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.9407,
+    "oracle_block": 782200
+  },
+  {
+    "timestamp": "2021-03-30T04:31:47.000000Z",
+    "hash": "jNGmAPQgGtS55xU8d4CE-POOpBM39pSHIKqhXJTWVxc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 781328,
+    "amount": 0.05765963,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.0531,
+    "oracle_block": 781320
+  },
+  {
+    "timestamp": "2021-03-29T22:58:04.000000Z",
+    "hash": "eTNJIGxnSmXLYMoFyAUDY1RuUaG3g6P-9-Pb1basRkQ",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 781087,
+    "amount": 0.05622633,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.2841,
+    "oracle_block": 781080
+  },
+  {
+    "timestamp": "2021-03-29T18:32:17.000000Z",
+    "hash": "MaHr15DzkmARLw2fQtLw8sY9GAhXLGsxUPY5nW0sC9w",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 780792,
+    "amount": 0.04568186,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.13461714,
+    "oracle_block": 780780
+  },
+  {
+    "timestamp": "2021-03-29T13:40:34.000000Z",
+    "hash": "FMbMUh9_FSb5GKPDl3S__Ug2ZXAdRwU6rwzrMArd__E",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 780498,
+    "amount": 0.08267,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.26,
+    "oracle_block": 780490
+  },
+  {
+    "timestamp": "2021-03-29T09:44:07.000000Z",
+    "hash": "qQlRNwBn_R4Q4mnNegS5Pd0X9DZIpvpPLrW6rI2jVW0",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 780232,
+    "amount": 0.08608815,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.38,
+    "oracle_block": 780230
+  },
+  {
+    "timestamp": "2021-03-29T05:38:43.000000Z",
+    "hash": "3_TIY1E30HMFW3HSalch6_U2SLMND-_cPM9fzIkhAGs",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 779962,
+    "amount": 0.07339905,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.3895,
+    "oracle_block": 779960
+  },
+  {
+    "timestamp": "2021-03-28T16:26:56.000000Z",
+    "hash": "Tus5QZk4l2QowvHqkFBqIjoR3qvdPBpr0N5mWt7O1kE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 779183,
+    "amount": 0.06069779,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.05105,
+    "oracle_block": 779180
+  },
+  {
+    "timestamp": "2021-03-28T11:53:10.000000Z",
+    "hash": "WwT5Dz_ZL4IHC8h6XmjmaNCTMRE0CD1ZRrne0Rh4eMg",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 778895,
+    "amount": 0.0500079,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.575,
+    "oracle_block": 778870
+  },
+  {
+    "timestamp": "2021-03-28T08:44:21.000000Z",
+    "hash": "SZ7nD_5vPQqQwXRfnbWLoSTstoqhhxGlVF4EkXePUWc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 778688,
+    "amount": 0.05592825,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.84293791,
+    "oracle_block": 778660
+  },
+  {
+    "timestamp": "2021-03-28T03:29:17.000000Z",
+    "hash": "sP9vnZlNffVo9gdAQaZb0VE0neu9NPW3DDUxIi0OxFg",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 778381,
+    "amount": 0.06003033,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.74875,
+    "oracle_block": 778380
+  },
+  {
+    "timestamp": "2021-03-27T23:57:03.000000Z",
+    "hash": "4vkWkupq6r2cqhQc0hoFr06swd5RviMym85BmV98SZ0",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 778148,
+    "amount": 0.04745928,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 10.602665,
+    "oracle_block": 778140
+  },
+  {
+    "timestamp": "2021-03-27T09:20:19.000000Z",
+    "hash": "4V6MukvCWbwidegINIRLN2BoVhYqqULRrcRxEH0PqTc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 777236,
+    "amount": 0.04885946,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.680256,
+    "oracle_block": 777230
+  },
+  {
+    "timestamp": "2021-03-27T01:27:16.000000Z",
+    "hash": "x0sUNqPb8FBL_2psKzpllYUgDdgNwISi2eGS9mP0o1I",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 776959,
+    "amount": 0.04695373,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.24213,
+    "oracle_block": 776940
+  },
+  {
+    "timestamp": "2021-03-26T21:00:02.000000Z",
+    "hash": "R2sVpwXMAjqCcaf8-yrZFEqugNCK-IF6AeGIzMzx2Xw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 776739,
+    "amount": 0.0630281,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.25618,
+    "oracle_block": 776730
+  },
+  {
+    "timestamp": "2021-03-26T12:24:58.000000Z",
+    "hash": "PWgFV0xsj19lz9Xt5L0-Sryw1wKuNULOzRotYJWJwE0",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 776451,
+    "amount": 0.05422385,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.1034444,
+    "oracle_block": 776450
+  },
+  {
+    "timestamp": "2021-03-26T08:07:30.000000Z",
+    "hash": "mc47uDK9y8_nsZUuEVBc5EY_QGhCHONgrWgBSvzRhls",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 776223,
+    "amount": 0.05827937,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.94206422,
+    "oracle_block": 776220
+  },
+  {
+    "timestamp": "2021-03-26T01:45:03.000000Z",
+    "hash": "W7d_841z49_t7d6_jr714PrV_xtB3h40vt9y3iT2Zr4",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 775904,
+    "amount": 0.07355953,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.11285095,
+    "oracle_block": 775900
+  },
+  {
+    "timestamp": "2021-03-25T12:03:05.000000Z",
+    "hash": "y9Onh6RTGQMj2pDErNk3RZKrMn56wDvo24t_p_D-Pgk",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 775068,
+    "amount": 0.06265264,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.049585,
+    "oracle_block": 775030
+  },
+  {
+    "timestamp": "2021-03-25T04:00:07.000000Z",
+    "hash": "osuCYpx6cTHBixuBybICG5kuf6sA5Ekppg_0v-Q8S_I",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 774524,
+    "amount": 0.05124863,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.891705,
+    "oracle_block": 774520
+  },
+  {
+    "timestamp": "2021-03-24T19:38:47.000000Z",
+    "hash": "e9TUEXaj8dkZol5K1PESmpIGsMNYsPddUkitbupepqM",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 773985,
+    "amount": 0.08038031,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.059315,
+    "oracle_block": 773980
+  },
+  {
+    "timestamp": "2021-03-24T16:06:03.000000Z",
+    "hash": "CtJdHTiyDoETac7oNi24Jq2Ydm3V92lcIlz1c53hCzo",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 773741,
+    "amount": 0.08038248,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.32,
+    "oracle_block": 773740
+  },
+  {
+    "timestamp": "2021-03-23T23:13:25.000000Z",
+    "hash": "P97wGA4VcRWMNzyl5Yk4Q3Jo2rA1pHcfmmaf4QL24TE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 772601,
+    "amount": 0.07017286,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.019345,
+    "oracle_block": 772600
+  },
+  {
+    "timestamp": "2021-03-23T19:03:30.000000Z",
+    "hash": "qZiAHB_6pXR0OxJQM_s3ZR7jOuxEBea-NoskNkOteUo",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 772341,
+    "amount": 0.06592969,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.52,
+    "oracle_block": 772340
+  },
+  {
+    "timestamp": "2021-03-23T15:37:27.000000Z",
+    "hash": "cXu2qWCqAvKslWfHIfVXnmtGmOac23260nRqSim2N0o",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 772100,
+    "amount": 0.0666965,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.38478697,
+    "oracle_block": 772090
+  },
+  {
+    "timestamp": "2021-03-23T11:34:16.000000Z",
+    "hash": "8w9Dz4i_fSaya6zBlr0clYVNAt9daTgmVfS9rc9Ttmo",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 771834,
+    "amount": 0.08263474,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.37341,
+    "oracle_block": 771820
+  },
+  {
+    "timestamp": "2021-03-22T10:56:46.000000Z",
+    "hash": "RpRtJZxaq3rsGgbukoc8m4IX7LwdJs1zMbRyMFbEHZ0",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 770766,
+    "amount": 0.06083639,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.40804711,
+    "oracle_block": 770760
+  },
+  {
+    "timestamp": "2021-03-22T05:27:59.000000Z",
+    "hash": "UxKArHfyDRW0uqVSNUsnmi8fgepNYOB0wWFDa3SxesQ",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 770399,
+    "amount": 0.07198055,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.79,
+    "oracle_block": 770380
+  },
+  {
+    "timestamp": "2021-03-21T21:26:43.000000Z",
+    "hash": "jbHGMZk_E9t_s0spCgAPFsmEfXHDzJJ481W1qJ0mFBA",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 769966,
+    "amount": 0.04622044,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.33270264,
+    "oracle_block": 769960
+  },
+  {
+    "timestamp": "2021-03-21T17:58:26.000000Z",
+    "hash": "4m4o517GLaoN-ufh83j-SeyaPmZghc0Trc9H4JP7EFk",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 769731,
+    "amount": 0.05074371,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.73135,
+    "oracle_block": 769700
+  },
+  {
+    "timestamp": "2021-03-21T13:51:27.000000Z",
+    "hash": "iDnHlv5JaAiQtoJYb56A0Q3vU83nLTwch14dbcMM9dw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 769474,
+    "amount": 0.06047874,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.47101531,
+    "oracle_block": 769460
+  },
+  {
+    "timestamp": "2021-03-21T06:49:37.000000Z",
+    "hash": "J5dI7psGBwXBtMoPgo76b92Jntu2Ud3PQy32O0OWB4A",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 768991,
+    "amount": 0.06982507,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.44,
+    "oracle_block": 768970
+  },
+  {
+    "timestamp": "2021-03-20T19:18:42.000000Z",
+    "hash": "DF6kTSK8S6R0zy3sz66cMDtUl-u0ZCth1cCrVcJRt6A",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 768392,
+    "amount": 0.06458213,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.53,
+    "oracle_block": 768390
+  },
+  {
+    "timestamp": "2021-03-20T15:28:58.000000Z",
+    "hash": "5I6JA51Rrri7s2t_G75eMsCzj4pidTQJrWVbU_WOqeU",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 768157,
+    "amount": 0.07822764,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.86,
+    "oracle_block": 768150
+  },
+  {
+    "timestamp": "2021-03-20T07:42:15.000000Z",
+    "hash": "KP9e-AknT58zZor35YQSApn3zL8QCJNIqaw-Z4pFRb0",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 767642,
+    "amount": 0.0662247,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.49761217,
+    "oracle_block": 767640
+  },
+  {
+    "timestamp": "2021-03-19T23:46:40.000000Z",
+    "hash": "eAViiYScY_tjNR13G_Hy_S5IvcHMB0ZBRGtuua9h-Ck",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 767176,
+    "amount": 0.05853446,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 9.055,
+    "oracle_block": 767150
+  },
+  {
+    "timestamp": "2021-03-19T14:44:41.000000Z",
+    "hash": "RSyBNWaPXRVzyuqXjLy5tpf8bawKMTItjVXaQocdeyA",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 766618,
+    "amount": 0.05211419,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 8.86,
+    "oracle_block": 766580
+  },
+  {
+    "timestamp": "2021-03-19T07:07:20.000000Z",
+    "hash": "SsJHY_lVDbckle--lHMPvp572KWcUFjUmW6Z2NfbRPI",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 766104,
+    "amount": 0.08947626,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.75081992,
+    "oracle_block": 766100
+  },
+  {
+    "timestamp": "2021-03-18T23:54:21.000000Z",
+    "hash": "NiJff5UlNyyQElBqTwAYv5fAUPZAkCbJnnoikARuGk8",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 765618,
+    "amount": 0.0932321,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.2817,
+    "oracle_block": 765610
+  },
+  {
+    "timestamp": "2021-03-18T19:39:33.000000Z",
+    "hash": "1biCkck0vTNPaLkC33SHFJkB1fNkoo757n1qo3Qxbaw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 765357,
+    "amount": 0.07660859,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.38995,
+    "oracle_block": 765350
+  },
+  {
+    "timestamp": "2021-03-18T03:36:47.000000Z",
+    "hash": "5ehYKqZNlq7Ncw9HJA05n1-BaDXcGOINqJrT3OUAcBA",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 764492,
+    "amount": 0.05599,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.80812773,
+    "oracle_block": 764490
+  },
+  {
+    "timestamp": "2021-03-17T21:20:12.000000Z",
+    "hash": "l9epPp1qfpvGCrwmYADSpts1zPSGWb9e8DvkePKj2kM",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 764076,
+    "amount": 0.0699941,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.3399,
+    "oracle_block": 764070
+  },
+  {
+    "timestamp": "2021-03-16T12:22:35.000000Z",
+    "hash": "GaCKOTbsbirafTc95fQrXEtKuQZNdiSqUFn5E4FY8Cc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 762376,
+    "amount": 0.06962535,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.023745,
+    "oracle_block": 762360
+  },
+  {
+    "timestamp": "2021-03-16T06:58:13.000000Z",
+    "hash": "XjQPDnsOJwDBEgZLjPZtDTXfZGNT4lHhDWaWsE0pClY",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 762020,
+    "amount": 0.101926,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.57157106,
+    "oracle_block": 762020
+  },
+  {
+    "timestamp": "2021-03-15T18:33:53.000000Z",
+    "hash": "sAekWAQEpfjiERdNwqX-WXhQ2d8dIJxY1DFQXF2l0Os",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 761214,
+    "amount": 0.08228047,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.21191926,
+    "oracle_block": 761210
+  },
+  {
+    "timestamp": "2021-03-15T14:10:01.000000Z",
+    "hash": "iSkGvGZiIvPu0WV33nzT4xnT0ytrGOaHl6tO07qJ5c8",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 760921,
+    "amount": 0.06566578,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.3835,
+    "oracle_block": 760920
+  },
+  {
+    "timestamp": "2021-03-15T01:45:54.000000Z",
+    "hash": "VX8adg2YWoW46iN4sX743Qz4fXtimARXVsxPNRaDYlw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 760114,
+    "amount": 0.08399525,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.59700629,
+    "oracle_block": 760100
+  },
+  {
+    "timestamp": "2021-03-14T13:41:40.000000Z",
+    "hash": "smgiOU4dzV9bZ6prwvkjDQwi0SIUrusD1vj2Boof8Qc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 759327,
+    "amount": 0.09689922,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.09155471,
+    "oracle_block": 759310
+  },
+  {
+    "timestamp": "2021-03-14T10:06:37.000000Z",
+    "hash": "WmDQBVyS52MIbXy94ejKw2eD9wYFvRHkMqsALckrGt4",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 759080,
+    "amount": 0.08969581,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.27666,
+    "oracle_block": 759040
+  },
+  {
+    "timestamp": "2021-03-13T20:48:30.000000Z",
+    "hash": "L3vg1YYdj4Dh60615Y7iZb-_Wc_k_gCqkqllzhcYhXE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 758541,
+    "amount": 0.07388612,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.86172028,
+    "oracle_block": 758540
+  },
+  {
+    "timestamp": "2021-03-13T16:33:27.000000Z",
+    "hash": "532KqT87MLK-33ZidDp0qVt82Dafh928GoHf4tKeenE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 758290,
+    "amount": 0.07255482,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.0623,
+    "oracle_block": 758260
+  },
+  {
+    "timestamp": "2021-03-13T09:23:18.000000Z",
+    "hash": "5QHNeozf8R2NYNnhMTyZbuqAGURj3PepqRzgpHx0JGw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 757800,
+    "amount": 0.07020455,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 5.97174329,
+    "oracle_block": 757800
+  },
+  {
+    "timestamp": "2021-03-12T16:03:32.000000Z",
+    "hash": "opY2HclrF7QYkkAS6X13HEOMr8kU6hvnvgVr3-YlayE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 756722,
+    "amount": 0.09789988,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 5.96,
+    "oracle_block": 756700
+  },
+  {
+    "timestamp": "2021-03-12T11:07:33.000000Z",
+    "hash": "Z0IXs3ybG0iDhswSB-H_35dE6msXI3wfAPzNOsIDdXg",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 756426,
+    "amount": 0.08515895,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.17416,
+    "oracle_block": 756400
+  },
+  {
+    "timestamp": "2021-03-11T23:16:00.000000Z",
+    "hash": "JYvX9HBpIxAiO-WWljbrc0EBvhzZwZ5EBctMY3327Zw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 755637,
+    "amount": 0.06915414,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.49,
+    "oracle_block": 755630
+  },
+  {
+    "timestamp": "2021-03-11T20:19:02.000000Z",
+    "hash": "ilkmpgV_PGo5uzaRD9iLDSOCG-WIKC6XdM63A1t8aho",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 755450,
+    "amount": 0.08098831,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.85632188,
+    "oracle_block": 755450
+  },
+  {
+    "timestamp": "2021-03-11T14:30:00.000000Z",
+    "hash": "BFQpGWvBDgbKI0eRkQZ4ueEU63RhXs0_Cw_LUzTfp8Y",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 755099,
+    "amount": 0.07427841,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 7.0633,
+    "oracle_block": 755080
+  },
+  {
+    "timestamp": "2021-03-11T07:16:34.000000Z",
+    "hash": "QrhqrHiHn-1qy53EeB3FrDLabksIz1TNXilkriAo-dw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 754602,
+    "amount": 0.07936308,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 6.77,
+    "oracle_block": 754590
+  },
+  {
+    "timestamp": "2021-03-10T08:59:25.000000Z",
+    "hash": "UmXVk1qP6CwDmyvFLgDU0ChyDugPLf6I34L-IxqhvKY",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 753071,
+    "amount": 0.09146662,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.66,
+    "oracle_block": 753010
+  },
+  {
+    "timestamp": "2021-03-10T05:04:43.000000Z",
+    "hash": "-O8qgVD81lhpM_Gc8NBxIL1nFsLEBU0gahy41l6MvDE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 752807,
+    "amount": 0.08063832,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.54,
+    "oracle_block": 752740
+  },
+  {
+    "timestamp": "2021-03-10T01:42:06.000000Z",
+    "hash": "LqbPOfXYFXLYBxyjDnkszMetyZaMU9ZPxhX0cbzSY-c",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 752573,
+    "amount": 0.08930395,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.77487928,
+    "oracle_block": 752570
+  },
+  {
+    "timestamp": "2021-03-09T21:37:25.000000Z",
+    "hash": "HBzh4oZTVGSLPxeDLIzpqEHGnXytsACu94cDt6rfDuc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 752317,
+    "amount": 0.0859853,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.68,
+    "oracle_block": 752310
+  },
+  {
+    "timestamp": "2021-03-09T17:13:47.000000Z",
+    "hash": "cp3nIpMSVrlVOh9FMS9pWlj0jUIgCClLD8Yht-RrtZI",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 752053,
+    "amount": 0.0697888,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.6433,
+    "oracle_block": 752040
+  },
+  {
+    "timestamp": "2021-03-09T09:51:22.000000Z",
+    "hash": "HcYyBaxtmjLCD8hZfMwu2ScaiQ5Rh-8vk4qJ41WjEkU",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 751538,
+    "amount": 0.04789,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.58,
+    "oracle_block": 751520
+  },
+  {
+    "timestamp": "2021-03-09T06:20:04.000000Z",
+    "hash": "VswvBrNmPU78U9juJgFUn4fSKPRCZuJyp_aZEnO45M4",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 751287,
+    "amount": 0.05244513,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.5588,
+    "oracle_block": 751280
+  },
+  {
+    "timestamp": "2021-03-09T02:51:14.000000Z",
+    "hash": "mshYmELeVBzg5EWQ1b2BZXrF_3llX59OjI5TuPrACF8",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 751041,
+    "amount": 0.04579353,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.5538,
+    "oracle_block": 751020
+  },
+  {
+    "timestamp": "2021-03-08T01:36:17.000000Z",
+    "hash": "RGP2PlV3B8O98tV0khQ8XdMoMwlaKG8_DEwlZlRtA68",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 749991,
+    "amount": 0.05436935,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.2999,
+    "oracle_block": 749990
+  },
+  {
+    "timestamp": "2021-03-07T20:23:26.000000Z",
+    "hash": "VDSZqaaIl0Eamk1FywOU42GdxiX8ZSnN4AMOrgAW5U0",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 749777,
+    "amount": 0.05121142,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.16647442,
+    "oracle_block": 749660
+  },
+  {
+    "timestamp": "2021-03-07T14:04:47.000000Z",
+    "hash": "qtcy8-UcEQkUsKco6PphVaTtOk0QiOYsd8oTVaSCwsM",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 749493,
+    "amount": 0.05399076,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.21856386,
+    "oracle_block": 749490
+  },
+  {
+    "timestamp": "2021-03-07T09:55:27.000000Z",
+    "hash": "_hOosRnVLWvhhIBWGbEzo3Lt4LY8fS5PAcNLR_12fw4",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 749241,
+    "amount": 0.05117736,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.17019588,
+    "oracle_block": 749230
+  },
+  {
+    "timestamp": "2021-03-07T06:32:59.000000Z",
+    "hash": "1-hD5ogQWwmKksftkM9wH3Brfbv0UaFMfi2AdXOsf58",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 749037,
+    "amount": 0.05390787,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.19825556,
+    "oracle_block": 749030
+  },
+  {
+    "timestamp": "2021-03-07T00:03:25.000000Z",
+    "hash": "y7h5PCfsxYIv8MCbdEwp6ldoLgIKQOlKGrI3TK7iLDM",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 748705,
+    "amount": 0.0494604,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.04969073,
+    "oracle_block": 748700
+  },
+  {
+    "timestamp": "2021-03-06T18:38:23.000000Z",
+    "hash": "McK75UtdftQD_eKsbbYfpqfkhbSWfWrnWRgjq2Xrrmo",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 748457,
+    "amount": 0.05347427,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.02,
+    "oracle_block": 748440
+  },
+  {
+    "timestamp": "2021-03-06T14:17:34.000000Z",
+    "hash": "7FdW5F0Zhv34rB7Na_Ywzathj3-kKKJobvPg1Au-oUM",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 748202,
+    "amount": 0.04927322,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 3.99,
+    "oracle_block": 748190
+  },
+  {
+    "timestamp": "2021-03-06T09:13:50.000000Z",
+    "hash": "tAegsJQargDJBuxKT51ISSphnDI8HG3lKZ2o4RtmvvE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 747876,
+    "amount": 0.05323351,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.05578331,
+    "oracle_block": 747870
+  },
+  {
+    "timestamp": "2021-03-06T03:32:04.000000Z",
+    "hash": "ZPKLi4O4vwJjltzaHJ8Zjf2cksGk33jXehtMFTpWgy8",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 747539,
+    "amount": 0.04739515,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 3.99964125,
+    "oracle_block": 747530
+  },
+  {
+    "timestamp": "2021-03-05T22:59:39.000000Z",
+    "hash": "WNJKOroADPVkG2BjXDuYR9mRHONV9TGT4NjJ_q6aIu4",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 747284,
+    "amount": 0.05492018,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.00677945,
+    "oracle_block": 747280
+  },
+  {
+    "timestamp": "2021-03-05T18:20:01.000000Z",
+    "hash": "m24R7iD_xNwFHqJvJa7DU2Gc_vOtJNKLlzQg6SbQphw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 747025,
+    "amount": 0.0560122,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 3.97,
+    "oracle_block": 747020
+  },
+  {
+    "timestamp": "2021-03-05T13:18:46.000000Z",
+    "hash": "2avqMrscUDcV3MdLxitFL0D5cb57-_CZaNrm_5b41BI",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 746682,
+    "amount": 0.05322395,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 3.9873,
+    "oracle_block": 746560
+  },
+  {
+    "timestamp": "2021-03-05T09:51:18.000000Z",
+    "hash": "9tIywM7cf0NCqjZM-riCCM9EVHgFI6MedWy_-eZY4h8",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 746475,
+    "amount": 0.05589355,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 3.9873,
+    "oracle_block": 746460
+  },
+  {
+    "timestamp": "2021-03-05T05:07:28.000000Z",
+    "hash": "4FbiL6h8K31sbImoVl-a18UeLOhg2FREmWspVn5X28M",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 746203,
+    "amount": 0.05711648,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.12937,
+    "oracle_block": 746180
+  },
+  {
+    "timestamp": "2021-03-05T00:00:30.000000Z",
+    "hash": "dYM57M8hyIiKg5Zo0OjwmXYTbHLhXJeNTMI40NXCGfc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 745891,
+    "amount": 0.05245034,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.17,
+    "oracle_block": 745870
+  },
+  {
+    "timestamp": "2021-03-04T17:26:19.000000Z",
+    "hash": "md0AP0P0BcrQqIPsjaO8dTKD-7o8lycwRr96FDB_KXc",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 745614,
+    "amount": 0.0562829,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.35629,
+    "oracle_block": 745610
+  },
+  {
+    "timestamp": "2021-03-04T13:13:52.000000Z",
+    "hash": "bDPDjR_x7NX93lWPHBuN3nQdr_xXvSTCVUzJCoNdfzI",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 745369,
+    "amount": 0.05541456,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.13,
+    "oracle_block": 745360
+  },
+  {
+    "timestamp": "2021-03-04T09:13:37.000000Z",
+    "hash": "TfFOrrMwr4LSJkeRtFEdMkO1oytEKmADYi81FhaybME",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 745106,
+    "amount": 0.05344887,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.17533076,
+    "oracle_block": 745100
+  },
+  {
+    "timestamp": "2021-03-03T21:25:40.000000Z",
+    "hash": "S4LN7pnwcrpRT065UsnfuksR0Fej9Yg3lIZJKUEuQeI",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 744511,
+    "amount": 0.05594399,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.235,
+    "oracle_block": 744510
+  },
+  {
+    "timestamp": "2021-03-03T16:15:26.000000Z",
+    "hash": "Au9KipRILzzGqmC0si4XkMzTyR3Bhf-JQFUzJOkWeSw",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 744186,
+    "amount": 0.05514017,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.07833775,
+    "oracle_block": 744180
+  },
+  {
+    "timestamp": "2021-03-03T12:12:44.000000Z",
+    "hash": "Fa7x8hTg1NzYLKhLuXfs23bjQBlUAnMz1glI7gPMU8E",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 743966,
+    "amount": 0.05324129,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.17616775,
+    "oracle_block": 743950
+  },
+  {
+    "timestamp": "2021-03-03T01:50:57.000000Z",
+    "hash": "VFba1zRUanDIjmcSxc0ZptSidVDMqR8ftkjP-p1zq4Y",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 743332,
+    "amount": 0.05354695,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.04981617,
+    "oracle_block": 743330
+  },
+  {
+    "timestamp": "2021-03-02T22:03:26.000000Z",
+    "hash": "clM1Y9NJtiCzEHv4EehO7cSkcZRPuU_6xgMrPNj-bac",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 743086,
+    "amount": 0.0583841,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.02521,
+    "oracle_block": 743060
+  },
+  {
+    "timestamp": "2021-03-02T15:28:16.000000Z",
+    "hash": "rPiwP4Ab1XDD418HcGTT1B5rwsHbq7AvSf1rYHZ3f7M",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 742870,
+    "amount": 0.05939224,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.20499,
+    "oracle_block": 742870
+  },
+  {
+    "timestamp": "2021-03-01T23:15:18.000000Z",
+    "hash": "XqdgqgsjIXMyMCA0p_n_sODG5XK-7lxeFiLsLzH6Aik",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 742383,
+    "amount": 0.06019328,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.11237,
+    "oracle_block": 742380
+  },
+  {
+    "timestamp": "2021-03-01T17:35:33.000000Z",
+    "hash": "5Fu7ITVV03RN3RtntVIbZTPG4dic10WaGdoYlcSAwYQ",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 742105,
+    "amount": 0.05935059,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.25650942,
+    "oracle_block": 742100
+  },
+  {
+    "timestamp": "2021-03-01T13:27:15.000000Z",
+    "hash": "LCje53sev1VGehnsNcq5nVAghFbA2Hjb9TYfl5ototE",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 741871,
+    "amount": 0.05818369,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.29952831,
+    "oracle_block": 741870
+  },
+  {
+    "timestamp": "2021-03-01T06:14:52.000000Z",
+    "hash": "2Tetha4-NytZm-oTXVixXfhJW1dgBaxobWQPOZv2Lwk",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 741578,
+    "amount": 0.06452979,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.28015,
+    "oracle_block": 741570
+  },
+  {
+    "timestamp": "2021-03-01T00:50:13.000000Z",
+    "hash": "d827TaIAMX-goYhIXZ1304y63KRdNJg-oe6GhH-x8IQ",
+    "gateway": "112P1vcvnwgXQYYPis6v1cfEqox9krSpRY7KLNfktttw3z73QEVx",
+    "block": 741362,
+    "amount": 0.05194024,
+    "account": "142AccHcj1jqo31P2kVBB7sJbNZkvKjjroodcXngPjEoaEL2gog",
+    "price": 4.22,
+    "oracle_block": 741320
+  }
+]

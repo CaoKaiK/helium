@@ -1,5 +1,6 @@
 import os
 from datetime import datetime as dt
+from dateutil.relativedelta import relativedelta
 import json
 import requests
 
@@ -33,7 +34,7 @@ for hotspot in account_data['hotspots']:
   name = hotspot['name']
   hotspot_address = hotspot['address']
   start_time = pd.to_datetime(hotspot['timestamp_added']).strftime('%Y-%m-%d')
-  end_time = pd.to_datetime(dt.today()).strftime('%Y-%m-%d')
+  end_time = pd.to_datetime(dt.today()+relativedelta(days=1)).strftime('%Y-%m-%d')
 
   params = {'min_time': start_time, 'max_time': end_time}
 
