@@ -1,7 +1,12 @@
+## virtual env
 /venv
+
+# cache
 __pycache__
 
+# reports
 *.xlsx
 
+# legacy
 key
 old
