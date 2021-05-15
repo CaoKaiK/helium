@@ -1,6 +1,10 @@
+from logging import log
 from utils.helium_api import get_activities
 from utils.firebase_connection import init
 from utils.classify_activity import classify_activity
+from utils.logger import get_logger
+
+logger = get_logger('update_routers')
 
 db = init()
 
@@ -11,12 +15,14 @@ routers = db.collection(u'routers').stream()
 
 # read overwrite flag
 overwrite = config.get('routers_overwrite')
+if overwrite:
+  logger.warning(f'Overwrite: {overwrite}')
 
 # iterate routers
 for router in routers:
   hotspot_name = router.to_dict()['name']
   hotspot_address = router.to_dict()['address']
-  print(f'### Router: {hotspot_name} ###')
+  logger.debug(f'### Router: {hotspot_name} ###')
 
   cursor = ''
   activities = []
@@ -25,7 +31,7 @@ for router in routers:
   while not activities or cursor:
     activities, cursor = get_activities(hotspot_address, cursor, get='hotspot')
 
-    print('.')
+    logger.debug(f'Cursor was returned: {cursor}')
 
     for activity in activities:
       # arrange activity dict according to type
@@ -43,13 +49,12 @@ for router in routers:
       if (not event.exists or overwrite):
         if activity:
           act_type = activity.get('type')
-          print(f'New entry: {act_type} on block {height}')
+          logger.info(f'Entry: {act_type} on block {height}')
           event_ref.set(activity)
         else:
-          print('Skipping known activity')
+          logger.info('Skipping known activity')
       else:
-        print('--- completed ---')
-        print(f'--- latest block: {height} ---')
+        logger.debug('### router completed ###')
         # set cursor to empty to break while loop
         cursor = ''
         # break activity loop
@@ -58,3 +63,6 @@ for router in routers:
 # reset overrite flag
 if overwrite:
   config_ref.update({u'routers_overwrite': False})
+  logger.warning('Overwrite: False')
+
+logger.info('--------------------------------------------------------')
