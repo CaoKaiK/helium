@@ -140,7 +140,7 @@ def classify_wallet_activity(activity, prev_balance):
         'day': date.day,
         'height': height,
         'price': price,
-        'prev_balance': round(prev_balance + amount + fee_hnt, 8),
+        'prev_balance': round(prev_balance + fee_hnt, 8),
         'current_balance': prev_balance
       }
     else:
@@ -168,7 +168,7 @@ def classify_wallet_activity(activity, prev_balance):
         'day': date.day,
         'height': height,
         'price': price,
-        'prev_balance': round(prev_balance + amount + fee_hnt, 8),
+        'prev_balance': round(prev_balance + fee_hnt, 8),
         'current_balance': prev_balance
       }
     else:
