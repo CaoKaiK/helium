@@ -4,7 +4,9 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-abspath=os.path.abspath(__file__)
+abspath = os.path.abspath(__file__)
+file_path = os.path.join(abspath, '..', 'key', 'helium-data-firebase-adminsdk-7ehtd-b2a18d49c8.json')
+print(file_path)
 
 def init():
   '''
@@ -16,7 +18,7 @@ def init():
     db: database object for further usage
   '''
   
-  cred = credentials.Certificate(os.path.join(abspath, '..', 'key', 'helium-data-firebase-adminsdk-7ehtd-b2a18d49c8.json'))
+  cred = credentials.Certificate(file_path)
 
   firebase_admin.initialize_app(cred, {'projectId': 'helium-data'})
 
