@@ -59,7 +59,7 @@ while date_yesterday >= last_eval_date:
       reward_act = reward_act.to_dict()
       # iterate all reward in the same reward activity
       for reward in reward_act['rewards']:
-        amount = reward['amount'] / 1e8
+        amount = round(reward['amount'] / 1e8, 8)
         if reward['type'] == 'poc_challengers':
           challenger += amount
         elif reward['type'] == 'poc_challengees':
