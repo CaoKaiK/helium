@@ -6,8 +6,6 @@ today = date.today().strftime('%y-%m-%d')
 abspath = os.path.dirname(os.path.abspath(__file__))
 log_path = os.path.join(abspath, '..', 'logs', f'{today}.log')
 
-print(log_path)
-
 def get_logger(file):
   # create logger 
   logger = logging.getLogger(file)
