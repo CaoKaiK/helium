@@ -3,7 +3,7 @@ import logging
 from datetime import date
 
 today = date.today().strftime('%y-%m-%d')
-log_path = os.path.join('logs', f'{today}.log')
+log_path = os.path.join('.','logs', f'{today}.log')
 
 def get_logger(file):
   # create logger 
