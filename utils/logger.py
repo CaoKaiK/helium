@@ -3,8 +3,8 @@ import logging
 from datetime import date
 
 today = date.today().strftime('%y-%m-%d')
-abspath=os.path.abspath(__file__)
-log_path = os.path.join(abspath, '..', '..', 'logs', f'{today}.log')
+abspath = os.path.dirname(os.path.abspath(__file__))
+log_path = os.path.join(abspath, '..', 'logs', f'{today}.log')
 
 print(log_path)
 
