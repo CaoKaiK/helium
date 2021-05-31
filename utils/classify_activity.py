@@ -55,10 +55,11 @@ def classify_wallet_activity(activity, prev_balance):
     # iterate multiple rewards in one block
     for reward in activity.get('rewards'):
       amount += reward['amount'] / 1e8
-    
+    amount = round(amount, 8)
+
     activity_dict = {
       'type': 'mining',
-      'amount': amount,
+      'amount': round(amount, 8),
       'hash': activity.get('hash'),
       'time': date,
       'year': date.year,
@@ -74,7 +75,8 @@ def classify_wallet_activity(activity, prev_balance):
     # iterate multiple payments in one block
     for payment in activity.get('payments'):
       amount += payment.get('amount') / 1e8
-    
+    amount = round(amount, 8)
+
     # add payment fee
     fee = activity.get('fee')
     fee_usd = fee / 1e5
@@ -98,6 +100,7 @@ def classify_wallet_activity(activity, prev_balance):
     }
   elif act_type in ['token_burn_v1']:
     amount = activity.get('amount') / 1e8
+    amount = round(amount, 8)
 
     fee = activity.get('fee')
     fee_usd = fee / 1e5
@@ -125,7 +128,7 @@ def classify_wallet_activity(activity, prev_balance):
 
       fee = activity.get('staking_fee') + activity.get('fee')
       fee_usd = fee / 1e5
-      fee_hnt = fee_usd / price
+      fee_hnt = round(fee_usd / price, 8)
 
       activity_dict = {
         'type': 'assert_location',
@@ -153,7 +156,7 @@ def classify_wallet_activity(activity, prev_balance):
 
       fee = activity.get('staking_fee') + activity.get('fee')
       fee_usd = fee / 1e5
-      fee_hnt = fee_usd / price
+      fee_hnt = round(fee_usd / price, 8)
 
       activity_dict = {
         'type': 'add_gateway',
