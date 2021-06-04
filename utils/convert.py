@@ -252,7 +252,7 @@ def convert_df_to_datev(wallet_df, export_path):
       entry_mining = entry.copy()
       amount_usd = row['amount'] * row['price']
       # round amount to cents and cummulate in running balance
-      rounded_amount_usd = amount_usd #round(amount_usd, 2)
+      rounded_amount_usd = round(amount_usd, 2)
       running_balance += amount_usd - rounded_amount_usd
 
       # write mining entry if amount larger 0.00

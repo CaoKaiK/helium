@@ -131,9 +131,9 @@ while date_yesterday >= last_eval_date:
     print('Export')
 
 
-# config_ref.update({u'routers_eval_day': date.today().day})
-# config_ref.update({u'routers_eval_month': date.today().month})
-# config_ref.update({u'routers_eval_year': date.today().year})
+config_ref.update({u'routers_eval_day': date.today().day})
+config_ref.update({u'routers_eval_month': date.today().month})
+config_ref.update({u'routers_eval_year': date.today().year})
 
 
 

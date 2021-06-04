@@ -21,7 +21,7 @@ wallets_list = wallets_list[0:1]
 
 # month
 eval_year = 2021
-eval_month = 5
+eval_month = 6
 
 # path without extension
 abspath = os.path.dirname(os.path.abspath(__file__))
