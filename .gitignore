@@ -6,7 +6,10 @@ __pycache__
 
 # reports
 *.xlsx
+*.xls
+*.csv
 logs
+export
 
 # legacy
 key
