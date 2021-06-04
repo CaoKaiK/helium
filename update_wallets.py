@@ -11,7 +11,7 @@ db = init()
 # load config file and stream wallets
 config_ref = db.collection(u'config').document(u'config')
 config = config_ref.get()
-wallets = db.collection(u'wallets').stream()
+wallets = db.collection(u'wallets').where(u'type', '==', 'helium').stream()
 
 # read overwrite flag
 overwrite = config.get('wallets_overwrite')
@@ -42,7 +42,7 @@ for wallet in wallets:
 
     for activity in activities:
       # arrange activity according to type
-      activity = classify_wallet_activity(activity, current_balance)
+      activity = classify_wallet_activity(activity, current_balance, account_address)
    
       height = activity.get('height')
       hash_act = activity.get('hash')

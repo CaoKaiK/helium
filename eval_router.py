@@ -90,12 +90,12 @@ while date_yesterday >= last_eval_date:
     total_count = challenger_count + beacon_count + witness_count + data_count + consensus_count
 
     rewards_map = {
-      'total': total,
-      'challenger': challenger,
-      'beacon': beacon,
-      'witness': witness,
-      'data': data,
-      'consensus': consensus
+      'total': round(total, 8),
+      'challenger': round(challenger, 8),
+      'beacon': round(beacon, 8),
+      'witness': round(witness, 8),
+      'data': round(data, 8),
+      'consensus': round(consensus, 8)
     }
     rewards_count_map = {
       'total': total_count,

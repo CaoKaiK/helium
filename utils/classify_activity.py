@@ -44,7 +44,7 @@ def classify_activity(activity):
 
   return activity_dict
 
-def classify_wallet_activity(activity, prev_balance):
+def classify_wallet_activity(activity, prev_balance, wallet_address):
   act_type = activity.get('type')
   date = datetime.fromtimestamp(activity.get('time'))
   height = activity.get('height')
@@ -55,11 +55,12 @@ def classify_wallet_activity(activity, prev_balance):
     # iterate multiple rewards in one block
     for reward in activity.get('rewards'):
       amount += reward['amount'] / 1e8
+
     amount = round(amount, 8)
 
     activity_dict = {
       'type': 'mining',
-      'amount': round(amount, 8),
+      'amount': amount,
       'hash': activity.get('hash'),
       'time': date,
       'year': date.year,
@@ -75,12 +76,19 @@ def classify_wallet_activity(activity, prev_balance):
     # iterate multiple payments in one block
     for payment in activity.get('payments'):
       amount += payment.get('amount') / 1e8
-    amount = round(amount, 8)
 
+    # reverse for receiving transactions
+    if activity.get('payer') != wallet_address:
+      amount = amount * -1
+      fee = 0
+    else:
+      fee = activity.get('fee')
+    
+    amount = round(amount, 8)
+      
     # add payment fee
-    fee = activity.get('fee')
     fee_usd = fee / 1e5
-    fee_hnt = fee_usd / price
+    fee_hnt = round(fee_usd / price, 8)
 
     activity_dict = {
       'type': 'payment',
@@ -104,7 +112,7 @@ def classify_wallet_activity(activity, prev_balance):
 
     fee = activity.get('fee')
     fee_usd = fee / 1e5
-    fee_hnt = fee_usd / price
+    fee_hnt = round(fee_usd / price, 8)
 
     activity_dict = {
       'type': 'burning',
@@ -174,6 +182,32 @@ def classify_wallet_activity(activity, prev_balance):
         'prev_balance': round(prev_balance + fee_hnt, 8),
         'current_balance': prev_balance
       }
+    else:
+      # payed by someone else
+      activity_dict = {}
+  elif act_type in ['transfer_hotspot_v1']:
+    # check if transfer from or to this wallet
+    if activity.get('buyer') == wallet_address:
+      fee = activity.get('fee')
+      fee_usd = fee / 1e5
+      fee_hnt = round(fee_usd / price, 8)
+
+      activity_dict = {
+        'type': 'transfer_hotspot',
+        'amount': 0,
+        'fee': fee,
+        'fee_usd': fee_usd,
+        'fee_hnt': fee_hnt,
+        'hash': activity.get('hash'),
+        'time': date,
+        'year': date.year,
+        'month': date.month,
+        'day': date.day,
+        'height': height,
+        'price': price,
+        'prev_balance': round(prev_balance + fee_hnt, 8),
+        'current_balance': prev_balance
+      }      
     else:
       # payed by someone else
       activity_dict = {}
