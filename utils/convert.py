@@ -4,8 +4,6 @@ import calendar
 import openpyxl
 import pandas as pd
 
-ex_rate = pd.read_csv(os.path.join('utils', 'data.csv'), skiprows=5, parse_dates=[1])
-
 
 def convert_df_to_cointracking(wallet_df, export_path):
   cointracking_col = [
