@@ -1,15 +1,19 @@
+# Firebase
+node_modules
+
+# Python
 ## virtual env
 /venv
-
-# cache
+## cache
 __pycache__
 
-# reports
+## reports
+logs
+export
 *.xlsx
 *.xls
 *.csv
-logs
-export
+
 
 # legacy
 key
