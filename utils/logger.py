@@ -4,16 +4,23 @@ from datetime import date
 
 today = date.today().strftime('%y-%m-%d')
 abspath = os.path.dirname(os.path.abspath(__file__))
-log_path = os.path.join(abspath, '..', 'logs', f'{today}.log')
+
 
 def get_logger(file):
+  log_dir = os.path.join(abspath, '..', 'logs', file)
+  
+  if not os.path.exists(log_dir):
+    os.mkdir(log_dir)
+
+  log_path = os.path.join(log_dir, f'{today}.log')
+
   # create logger 
   logger = logging.getLogger(file)
   logger.setLevel(logging.DEBUG)
-  # create file handler which logs even debug messages
+  # create file handler for level debug or higher
   fh = logging.FileHandler(log_path)
   fh.setLevel(logging.DEBUG)
-  # create console handler with a higher log level
+  # create console handler for level error or higher
   ch = logging.StreamHandler()
   ch.setLevel(logging.ERROR)
   # create formatter and add it to the handlers

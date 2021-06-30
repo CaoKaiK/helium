@@ -2,7 +2,7 @@ from datetime import date, timedelta
 import os
 
 from utils.firebase_connection import init
-from utils.convert import convert_df_to_cointracking, convert_df_to_datev
+from utils.convert import convert_df_to_datev
 
 import pandas as pd
 
@@ -26,7 +26,6 @@ eval_month = 6
 # path without extension
 abspath = os.path.dirname(os.path.abspath(__file__))
 export_path_standard = os.path.join(abspath,'export', 'standard', f'{eval_year}-{eval_month}')
-export_path_coin = os.path.join(abspath,'export', 'cointracking', f'{eval_year}-{eval_month}')
 export_path_datev = os.path.join(abspath,'export', 'datev', f'{eval_year}-{eval_month}')
 
 for wallet in wallets_list:
@@ -48,9 +47,6 @@ for wallet in wallets_list:
     wallet_df['time'] = wallet_df['time'].dt.tz_localize(None)
     # sortcolumns
     wallet_df = wallet_df.sort_index(axis=1)
-
-    # cointracking
-    convert_df_to_cointracking(wallet_df.copy(), export_path_coin)
 
     # datev
     convert_df_to_datev(wallet_df.copy(), export_path_datev)
