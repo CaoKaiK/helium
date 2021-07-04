@@ -1,4 +1,5 @@
 
+from os import mkdir
 from utils.firebase_connection import init
 from utils.helium_api import get_account, get_activities
 from utils.classify_activity import classify_wallet_activity
@@ -14,6 +15,8 @@ config_ref = db.collection(u'config').document(u'config')
 config = config_ref.get()
 wallets = db.collection(u'wallets').where(u'type', '==', 'helium').stream()
 
+balance_hnt_ref = db.collection(u'balance_hnt')
+
 # read overwrite flag
 overwrite = config.get('wallets_overwrite')
 if overwrite:
@@ -23,7 +26,6 @@ if overwrite:
 for wallet in wallets:
   wallet_name = wallet.to_dict()['name']
   wallet_address = wallet.to_dict()['address']
-
 
   # get account balance for cross check
   account = get_account(wallet_address)
@@ -60,6 +62,36 @@ for wallet in wallets:
           logger.info(f'{wallet_name} - Entry: {act_type} on block {height}')
           event_ref.set(activity)
 
+          # enter event in fifo list
+          time = activity['time']
+          doc_id = time.strftime('%Y-%m-%dT%H:%M:%S')
+
+          if activity['amount'] > 0:
+            fifo_to_allocate = activity['amount']
+
+          elif activity.get('fee_hnt', 0) > 0:
+            fifo_to_allocate = -activity['fee_hnt']
+          
+          else:
+            logger.warning(f'{wallet_name} - {act_type} on block {height} not evaluated in FIFO')
+
+          fifo_event = {
+            'time': activity['time'],
+            'year': activity['year'],
+            'month': activity['month'],
+            'day': activity['day'],
+            'height': height,
+            'amount': activity['amount'],
+            'fee_hnt': activity.get('fee_hnt', 0),
+            'fee_usd': activity.get('fee_usd',0),
+            'fifo_to_allocate': fifo_to_allocate,
+            'price': activity['price'],
+            'type': act_type
+          }
+          
+          fifo_event_ref = balance_hnt_ref.document(doc_id)
+          fifo_event_ref.set(fifo_event)
+
         else:
           logger.info(f'{wallet_name} - Skipping known transaction with no balance change')
       else:
@@ -76,10 +108,16 @@ for wallet in wallets:
   balance_height = wallet.to_dict()['balance_height']
   last_balance = wallet.to_dict()['balance']
 
+  if overwrite:
+    logger.warning(f'{wallet_name} - Reset Balance')
+    wallet_ref.update({u'balance': 0})
+    wallet_ref.update({u'balance_height': 0})
+
+
   logger.info(f'{wallet_name} - Balance from {balance_height} to {current_height}')
 
   # run balance
-  calc_balance, last_activity = run_balance(activities_ref, balance_height, last_balance)
+  calc_balance, last_activity, last_fee = run_balance(activities_ref, balance_height, last_balance)
   
   # if empty last_activity is returned, no additional events happened between now and last_balance
   if last_activity:
@@ -93,19 +131,21 @@ for wallet in wallets:
       wallet_ref.update({u'balance': balance})
     else:
       # add correction in front of last activity
-      last_activity['amount'] = 0
-      last_activity['fee_hnt'] = calc_balance - balance
-      last_activity['fifo_to_allocate'] = calc_balance - balance
-      last_activity['fee'] = 0
-      last_activity['fee_usd'] = 0
-      last_activity['type'] = 'correction'
+      last_fee_height = last_fee['height']
+      last_fee['amount'] = 0
+      last_fee['fee_hnt'] = calc_balance - balance
+      last_fee['fee'] = 0
+      last_fee['fee_usd'] = 0
+      last_fee['type'] = 'correction'
 
-      event_ref = activities_ref.document(f'{height}_')
-      event_ref.set(last_activity)
+      event_ref = activities_ref.document(f'{last_fee_height}_')
+      event_ref.set(last_fee)
+
+      fifo_event_ref
 
       logger.info(f'{wallet_name} - Balance corrected by {calc_balance-balance}')
 
-      calc_balance, last_activity = run_balance(activities_ref, balance_height, last_balance)
+      calc_balance, last_activity, last_fee = run_balance(activities_ref, balance_height, last_balance)
 
       if calc_balance == balance:
         logger.info(f'{wallet_name} - Balance ok after correction')

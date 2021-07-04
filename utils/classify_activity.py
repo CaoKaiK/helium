@@ -63,7 +63,6 @@ def classify_wallet_activity(activity, wallet_address, logger):
     # add type and amount to activity
     activity_dict['type'] = 'mining'
     activity_dict['amount'] = amount
-    activity_dict['fifo_to_allocate'] = amount
 
   ### transaction ###
   elif act_type in ['payment_v2', 'payment_v1']:
@@ -84,14 +83,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
       activity_dict['fee_usd'] = fee_usd
       activity_dict['fee_hnt'] = fee_hnt
 
-      activity_dict['fifo_allocated'] = 0
-
-    # no fee in incoming transactions
-    # fifo availables
-    else:
-      activity_dict['fifo_to_allocate'] = amount
-      
-
+    # no fee for incoming transactions
 
     activity_dict['type'] = 'transaction'
     activity_dict['amount'] = amount
@@ -110,8 +102,6 @@ def classify_wallet_activity(activity, wallet_address, logger):
     activity_dict['fee_usd'] = fee_usd
     activity_dict['fee_hnt'] = fee_hnt
 
-    activity_dict['fifo_allocated'] = 0
-
   elif act_type in ['assert_location_v2', 'assert_location_v1']:
     # check if payed by wallet owner
     if activity.get('payer') == activity.get('owner'):
@@ -125,8 +115,6 @@ def classify_wallet_activity(activity, wallet_address, logger):
       activity_dict['fee'] = fee
       activity_dict['fee_usd'] = fee_usd
       activity_dict['fee_hnt'] = fee_hnt
-
-      activity_dict['fifo_allocated'] = 0
 
     else:
       # payed by someone else
@@ -146,8 +134,6 @@ def classify_wallet_activity(activity, wallet_address, logger):
       activity_dict['fee_usd'] = fee_usd
       activity_dict['fee_hnt'] = fee_hnt
 
-      activity_dict['fifo_allocated'] = 0
-
     else:
       # payed by someone else
       activity_dict = {}
@@ -164,8 +150,6 @@ def classify_wallet_activity(activity, wallet_address, logger):
       activity_dict['fee'] = fee
       activity_dict['fee_usd'] = fee_usd
       activity_dict['fee_hnt'] = fee_hnt
-
-      activity_dict['fifo_allocated'] = 0
 
     else:
       # payed by someone else

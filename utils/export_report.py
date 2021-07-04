@@ -48,9 +48,3 @@ def export(report_day, db):
   router_df = pd.DataFrame.from_dict({'router': router_name_list, 'rewards': rewards_list})
   router_df.to_excel(export_path, index=False)
 
-
-
-
-
-
-
