@@ -22,21 +22,21 @@ logger.info(f'Exporting {eval_month}-{eval_year}')
 # path without extension
 abspath = os.path.dirname(os.path.abspath(__file__))
 export_path_standard = os.path.join(abspath,'export', 'standard', f'{eval_year}-{eval_month}')
-export_path_datev = os.path.join(abspath,'export', 'datev', f'{eval_year}-{eval_month}')
+export_path_datev = os.path.join(abspath,'export', 'datev', f'datev_{eval_year}-{eval_month}')
 
+events = balance_hnt_ref.where(u'year', u'==', eval_year).where(u'month', u'==', eval_month).get()
 
+event_list = []
+for event in events:
+  event_list.append(event.to_dict())
 
+if event_list:
+  event_df = pd.DataFrame(event_list)
+  event_df['time'] = event_df['time'].dt.tz_localize(None)
+  event_df = event_df.sort_values(by=['time'])
 
+  convert_df_to_datev(event_df.copy(), export_path_datev)
 
-# for wallet in wallets_list:
-#   wallet_name = wallet.to_dict()['name']
-#   print(f'Exporting {wallet_name}:')
-  
-#   wallet_ref = db.collection(u'wallets').document(wallet_name).collection(u'activities')
-#   wallets_activities = wallet_ref\
-#     .where(u'year', u'==', eval_year)\
-#     .where(u'month', u'==', eval_month).get()
-  
 #   activity_list = []
 #   for activity in wallets_activities:
 #     activity_list.append(activity.to_dict())

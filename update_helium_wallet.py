@@ -130,10 +130,13 @@ for wallet in wallets:
       # update balance in wallet
       wallet_ref.update({u'balance': balance})
     else:
-      # add correction in front of last activity
+      # save original values
       last_fee_height = last_fee['height']
+      original_fee_hnt = last_fee['fee_hnt']
+      # add correction in front of last activity
+      correction = calc_balance - balance
       last_fee['amount'] = 0
-      last_fee['fee_hnt'] = calc_balance - balance
+      last_fee['fee_hnt'] = correction
       last_fee['fee'] = 0
       last_fee['fee_usd'] = 0
       last_fee['type'] = 'correction'
@@ -141,9 +144,14 @@ for wallet in wallets:
       event_ref = activities_ref.document(f'{last_fee_height}_')
       event_ref.set(last_fee)
 
-      fifo_event_ref
+      doc_id = last_fee['time'].strftime('%Y-%m-%dT%H:%M:%S')
 
-      logger.info(f'{wallet_name} - Balance corrected by {calc_balance-balance}')
+      balance_hnt_ref.document(doc_id).update({
+        u'fee_hnt': original_fee_hnt+correction,
+        u'fifo_to_allocate': -(original_fee_hnt+correction)
+        })
+
+      logger.info(f'{wallet_name} - Balance corrected by {correction}')
 
       calc_balance, last_activity, last_fee = run_balance(activities_ref, balance_height, last_balance)
 

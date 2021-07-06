@@ -54,21 +54,17 @@ for index, event in balance_out_df.iterrows():
   event_type = event['type']
 
   logger.info(f'Outgoing Event - {doc_id} - {event_type} - Required: {-fifo_to_allocate} - {realized_price}')
+
   
   # cost neutral
   cost_neutral = []
   # summed amount smaller 0.00$
   cost_neutral_corr = 0
 
-  # earnings
-  realized_earnings = []
+  # realized earnings/losses
+  realized = []
   # summed earnings smaller 0.00$
-  earnings_cor = 0
-
-  # losses
-  realized_losses = []
-  # summed losses smaller 0.00$
-  losses_cor = 0
+  realized_corr = 0
 
   for index, event_in in balance_in_df.iterrows():
     # get event in ref for fifo changes
@@ -82,27 +78,17 @@ for index, event in balance_out_df.iterrows():
     # fifo required is greater than fifo available in this event_in
     if fifo_to_allocate + available_fifo < 0:
       # cost neutral amount
-      rounded_neutral, cost_neutral_corr = rounded_sum(available_fifo * purchase_price / 1e8, cost_neutral_corr, 2)
+      rounded_neutral, cost_neutral_corr = rounded_sum(available_fifo * purchase_price / 1e8, cost_neutral_corr, 3)
       if rounded_neutral > 0:
-        cost_neutral.append(rounded_neutral)
-      # losses
-      if purchase_price > realized_price:
-        rounded_loss, losses_cor = rounded_sum(available_fifo * (purchase_price - realized_price) / 1e8, losses_cor, 2)
-        if rounded_loss > 0:
-          realized_losses.append(rounded_loss)
-      # earnings
-      elif purchase_price < realized_price:
-        rounded_earning, earnings_cor = rounded_sum(available_fifo * (realized_price - purchase_price) / 1e8, earnings_cor, 2)
-        if rounded_earning > 0:
-          realized_earnings.append(rounded_earning)
-      else:
-        # no addition to losses or earnings
-        None
+        cost_neutral.append({'amount': rounded_neutral, 'height': height, 'amount_hnt': available_fifo})
+
+        rounded_realized, realized_corr = rounded_sum(available_fifo * (realized_price - purchase_price) / 1e8, realized_corr, 3)
+        realized.append({'amount': rounded_realized, 'height': height, 'price': purchase_price})
       
       # update remaining amount
       fifo_to_allocate += available_fifo
 
-      logger.debug(f'Part filled - {doc_id} - {height} - Used: {available_fifo} - Remaining: {0} - {purchase_price}')
+      logger.debug(f'Partial fill - {doc_id} - {height} - Used: {available_fifo} - Remaining: 0 - {purchase_price}')
 
       # update event_in
       event_in_ref.update({u'fifo_to_allocate': 0})
@@ -113,29 +99,18 @@ for index, event in balance_out_df.iterrows():
     # also used for clean up and break -> going to next event_out
     else:
       # cost neutral amount
-      rounded_neutral, cost_neutral_corr = rounded_sum(-fifo_to_allocate * purchase_price / 1e8, cost_neutral_corr, 2)
+      rounded_neutral, cost_neutral_corr = rounded_sum(-fifo_to_allocate * purchase_price / 1e8, cost_neutral_corr, 3)
       if rounded_neutral > 0:
-        cost_neutral.append(rounded_neutral)
-      # losses
-      if purchase_price > realized_price:
-        rounded_loss, losses_cor = rounded_sum(-fifo_to_allocate * (purchase_price - realized_price) / 1e8, losses_cor, 2)
-        if rounded_loss > 0:
-          realized_losses.append(rounded_loss)
-      # earnings
-      elif purchase_price < realized_price:
-        rounded_earning, earnings_cor = rounded_sum(-fifo_to_allocate * (realized_price - purchase_price) / 1e8, earnings_cor, 2)
-        realized_earnings.append({
-          'height': event_in['height'],
-          'amount': rounded_earning
-        })
-      else:
-        # no addition to losses or earnings
-        None
+        cost_neutral.append({'amount': rounded_neutral, 'height': height, 'amount_hnt': -fifo_to_allocate})
+        
+        rouned_realized, realized_corr = rounded_sum(-fifo_to_allocate * (realized_price - purchase_price) / 1e8, realized_corr, 3)
+        realized.append({'amount': rouned_realized, 'height': height, 'price': purchase_price})
+
       
       # update remaining fifo in last event_in
       available_fifo += fifo_to_allocate
 
-      logger.debug(f'Fully filled - {doc_id} - {height} - Used: {-fifo_to_allocate} - Remaining: {available_fifo} - {purchase_price}')
+      logger.debug(f'Complete fill - {doc_id} - {height} - Used: {-fifo_to_allocate} - Remaining: {available_fifo} - {purchase_price}')
 
       # update event in database
       event_in_ref.update({u'fifo_to_allocate': available_fifo})
@@ -149,28 +124,70 @@ for index, event in balance_out_df.iterrows():
           'amount': round(cost_neutral_corr, 2)
         })
       
-      if round(losses_cor, 2) > 0:
-        realized_losses.append({
+      if round(realized_corr, 2) > 0:
+        realized_corr.append({
           'type': 'collection',
-          'amount': round(losses_cor, 2)
-        })
-      
-      if round(earnings_cor, 2) > 0:
-        realized_earnings.append({
-          'type': 'collection',
-          'amount': round(earnings_cor, 2)
+          'amount': round(realized_corr, 2)
         })
 
       # update event out
       event_out_ref.update({
         u'fifo_to_allocate': 0,
         u'cost_neutral': cost_neutral,
-        u'realized_earnings': realized_earnings,
-        u'realized_losses': realized_losses
+        u'realized': realized,
         })
+      # break event in for loop
+      break
+  
+  ### outgoing transaction ###
+  # calculate pseudo fifo amount for cost neutral transfer
+  if event_type == 'transaction':
+    pseudo_fifo_amount = event['amount']
+
+    pseudo_balance_in_df = balance_in_df.copy()
+
+    # in USD
+    pseudo_neutral_amount = 0
+
+    for index, event_in in pseudo_balance_in_df.iterrows():
+      height = event_in['height']
+
+      available_fifo = event_in['fifo_to_allocate']
+      purchase_price = event_in['price']
+
+      # fifo required is greater than fifo available in this event_in
+      if pseudo_fifo_amount + available_fifo < 0:
+        # cost neutral amount - will be rounded at the end
+        pseudo_neutral_amount += available_fifo * purchase_price / 1e8
+
+        # update remaining amount
+        pseudo_fifo_amount += available_fifo
+
+        logger.debug(f'Pseudo partial fill - {height} - Used: {available_fifo} - Remaining: 0 - {purchase_price}')
+
+        # update in dataframe
+        pseudo_balance_in_df = pseudo_balance_in_df.drop([index])
+
+      # fifo required is smaller or equal fifo available in this event_in
+      # also used for clean up and break -> going to next event_out
+      else:
+        # cost neutral amount
+        pseudo_neutral_amount += -pseudo_fifo_amount * purchase_price / 1e8
+
+        # update remaining fifo in last event_in
+        available_fifo += pseudo_fifo_amount
+
+        logger.debug(f'Pseudo complete fill - {height} - Used: {-pseudo_fifo_amount} - Remaining: {available_fifo} - {purchase_price}')
+
+        # update event out
+        event_out_ref.update({
+          u'pseudo_neutral_amount': round(pseudo_neutral_amount, 3)
+          })
+        # break event in for loop
+        break
       
 
-      break
+
 
 # get updated balance
 balance_in = balance_hnt_ref.where(u'fifo_to_allocate', u'>', 0).get()
@@ -184,6 +201,6 @@ balance_in_df = pd.DataFrame(balance_in_list)
 remaining_hnt = balance_in_df['fifo_to_allocate'].sum()
 
 logger.info(f'Company account should still have {remaining_hnt} Bones')
-account = get_account('14pomxxicuQUXsnsL7Ew6R6tJ2VbYJsidgLBwCNHfRGgdpJ9bc8')
+account = get_account('14pomxxicuQUXsnsL7Ew6R6tJ2VbYJsidgLBwCNHfRGgdpJ9bc8') # 146AgmWsmksqHUUXT6n8HEgcScD5bhS52fzzRFK7srWYRX2nUBM
 balance = account['balance']
 logger.info(f'Helium account currently holds {balance} Bones')

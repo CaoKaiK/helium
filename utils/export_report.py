@@ -21,7 +21,7 @@ def export(report_day, db):
 
   # path without extension
   abspath = os.path.dirname(os.path.abspath(__file__))
-  export_path = os.path.join(abspath,'..' ,'export', 'routers', f'{year}-{last_month}.xlsx')
+  export_path = os.path.join(abspath,'..' ,'export', 'routers', f'routers_{year}-{last_month}.xlsx')
 
   router_name_list = []
   rewards_list = []

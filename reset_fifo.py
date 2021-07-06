@@ -44,7 +44,7 @@ if True:
       fee_hnt = activity['fee_hnt']
       if add_fee_hnt > 0:
         fee_hnt += add_fee_hnt
-        print('worked')
+        print('Correction worked')
 
         add_fee_hnt = 0
       
