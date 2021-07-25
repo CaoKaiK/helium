@@ -77,3 +77,22 @@ def get_oracle_price(height):
     oracle_block = r.json()['data']['block']
 
   return price
+
+def get_height(time):
+  '''
+  get latest block at time
+  
+  args:
+  time: in datetime format
+  '''
+  url = f'{BASE_URL}/blocks/height'
+
+  params = {'max_time': time.isoformat()}
+
+  r = requests.get(url, params=params)
+
+  if r.status_code == 200:
+    height = r.json()['data']['height']
+  
+  return height
+

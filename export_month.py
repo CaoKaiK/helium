@@ -15,7 +15,7 @@ balance_hnt_ref = db.collection(u'balance_hnt')
 
 # month
 eval_year = 2021
-eval_month = 6
+eval_month = 7
 
 logger.info(f'Exporting {eval_month}-{eval_year}')
 

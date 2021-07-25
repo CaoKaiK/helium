@@ -198,7 +198,7 @@ for balance_event in balance_in:
     
 balance_in_df = pd.DataFrame(balance_in_list)
 
-remaining_hnt = balance_in_df['fifo_to_allocate'].sum()
+remaining_hnt = int(balance_in_df['fifo_to_allocate'].sum())
 
 logger.info(f'Company account should still have {remaining_hnt} Bones')
 account = get_account('14pomxxicuQUXsnsL7Ew6R6tJ2VbYJsidgLBwCNHfRGgdpJ9bc8') # 146AgmWsmksqHUUXT6n8HEgcScD5bhS52fzzRFK7srWYRX2nUBM
