@@ -125,7 +125,7 @@ for index, event in balance_out_df.iterrows():
         })
       
       if round(realized_corr, 2) > 0:
-        realized_corr.append({
+        realized.append({
           'type': 'collection',
           'amount': round(realized_corr, 2)
         })

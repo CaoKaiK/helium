@@ -6,14 +6,13 @@ from requests.api import get
 from utils.helium_api import get_height
 from utils.firebase_connection import init
 
-transaction_datetime = dt(2021, 7, 18, 15, 13, 0)
-
-# amount HNT
-amount_hnt = 183
-usd_hnt = 11.6121
-usd_eur = 0.856487
-transaction_fee = 14.03
-transaction_amount = 1820
+# info
+transaction_datetime = dt(2021, 8, 30, 20, 44, 0)
+amount_hnt = 50
+usd_hnt = 21.7181
+usd_eur = 0.85382514
+transaction_fee = 9.59
+transaction_amount = 927.18
 
 print(transaction_datetime)
 
@@ -25,8 +24,8 @@ transaction_ref = balance_hnt_ref.document(doc_id)
 
 transaction = {
   'type': 'exchange',
-  'amount': amount_hnt*1e8,
-  'fifo_to_allocate': -amount_hnt*1e8,
+  'amount': int(amount_hnt*1e8),
+  'fifo_to_allocate': -int(amount_hnt*1e8),
   'price': usd_hnt,
   'usd_eur': usd_eur,
   'year': transaction_datetime.year,
