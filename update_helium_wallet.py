@@ -1,5 +1,3 @@
-
-from os import mkdir
 from utils.firebase_connection import init
 from utils.helium_api import get_account, get_activities
 from utils.classify_activity import classify_wallet_activity
