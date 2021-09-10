@@ -41,7 +41,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
   # get oracle price on activity height
   height = activity.get('height')
-  price = get_oracle_price(height)
+  price = get_oracle_price(height, logger)
   # generic activity dict
   activity_dict = {
     'hash': activity.get('hash'),
@@ -97,10 +97,12 @@ def classify_wallet_activity(activity, wallet_address, logger):
     fee_hnt = int(round(fee_usd / price * 1e8))
 
     activity_dict['type'] = 'burning'
-    activity_dict['amount'] = amount
+    activity_dict['amount'] = 0 
+    activity_dict['amount_burned'] = amount
     activity_dict['fee'] = fee
     activity_dict['fee_usd'] = fee_usd
-    activity_dict['fee_hnt'] = fee_hnt
+    activity_dict['fee_hnt'] = fee_hnt + amount
+    activity_dict['fee_hnt_orig'] = fee_hnt
 
   elif act_type in ['assert_location_v2', 'assert_location_v1']:
     # check if payed by wallet owner
@@ -161,5 +163,33 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
   return activity_dict
 
+def create_fifo_event(activity, wallet_id, logger):
+
+  if activity.get('amount', 0) > 0:
+    fifo_to_allocate = activity['amount']
+
+  elif activity.get('fee_hnt', 0) > 0:
+    fifo_to_allocate = -activity['fee_hnt']
+          
+  else:
+     logger.warning(f'Activity has no amount to be evaluated in FIFO')
+  
+  fifo_event = {
+    'time': activity['time'],
+    'year': activity['year'],
+    'month': activity['month'],
+    'day': activity['day'],
+    'height': activity['height'],
+    'amount': activity['amount'],
+    'fee_hnt': activity.get('fee_hnt', 0),
+    'fee_usd': activity.get('fee_usd',0),
+    'fifo_to_allocate': fifo_to_allocate,
+    'price': activity['price'],
+    'type': activity['type'],
+    'committed': False,
+    'wallet_id': wallet_id
+  }
+
+  return fifo_event
 
 
