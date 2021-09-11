@@ -28,7 +28,7 @@ for router in routers:
 
   # initiate first call and repeat until no cursor is returned
   while not activities or cursor:
-    activities, cursor = get_activities(hotspot_address, cursor, get='hotspot')
+    activities, cursor = get_activities(hotspot_address, logger, cursor, get='hotspot')
 
     logger.debug(f'{hotspot_name} - Cursor was returned: {cursor}')
 

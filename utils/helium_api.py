@@ -1,14 +1,7 @@
-import os
 import time
-import json
-
 import requests
-from urllib3.util.retry import Retry
-
-
 
 BASE_URL = 'https://api.helium.io/v1'
-
 
 def get_activities(address, logger, cursor='', get='hotspot'):
   '''

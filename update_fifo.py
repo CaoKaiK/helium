@@ -71,8 +71,6 @@ for fifo_account in fifo_accounts:
   else:
     fifo_events_in_df = pd.DataFrame()
 
-
-  
   # running balance for checksum
   fifo_out = 0
   fifo_in = 0
@@ -225,8 +223,58 @@ for fifo_account in fifo_accounts:
             event_out_snap = fifo_exchanges_ref.document(event_out_id.replace('_', '')).get()
             
             event_out_dict = event_out_snap.to_dict()
+          
+          # if event is a transaction calculate fifo amount
+          # as if the transaction was an exchange
+          # same function applies but fifo is not commited to events
+          elif event_out['type'] == 'transaction':
+            pseudo_fifo_amount = event_out['amount']
+
+            if pseudo_fifo_events_in_df.empty:
+              pseudo_fifo_events_in_df = fifo_events_in_df.copy()
+
+            # in USD
+            pseudo_neutral_amount = 0
+
+            for index_in, event_in in pseudo_fifo_events_in_df.iterrows():
+              height = event_in['height']
+
+              available_fifo = event_in['fifo_to_allocate']
+              purchase_price = event_in['price']
+
+              # fifo required is greater than fifo available in this event_in
+              if pseudo_fifo_amount + available_fifo < 0:
+                # cost neutral amount - will be rounded at the end
+                pseudo_neutral_amount += available_fifo * purchase_price / 1e8
+
+                # update remaining amount
+                pseudo_fifo_amount += available_fifo
+
+                # update in dataframe
+                pseudo_fifo_events_in_df = pseudo_fifo_events_in_df.drop([index_in])
+
+              # fifo required is smaller or equal fifo available in this event_in
+              # also used for clean up and break -> going to next event_out
+              else:
+                # cost neutral amount
+                pseudo_neutral_amount += -pseudo_fifo_amount * purchase_price / 1e8
+
+                # update remaining fifo in last event_in
+                available_fifo += pseudo_fifo_amount
+
+                # update event out
+                fifo_events_out_df.loc[index_out, 'pseudo_neutral_amount'] = round(pseudo_neutral_amount, 3)
+                event_out_dict['pseudo_neutral_amount'] = round(pseudo_neutral_amount, 3)
+
+                # break event in for loop
+                break
+                
           else:
             event_out_dict = {}
+
+          ### outgoing transaction ###
+          # calculate pseudo fifo amount for cost neutral transfer
+
 
           event_out_dict['event_id'] = event_out_id
           event_out_dict['fifo_to_allocate'] = 0
@@ -239,51 +287,7 @@ for fifo_account in fifo_accounts:
 
           # break event in for loop
           break
-      
-    ### outgoing transaction ###
-    # calculate pseudo fifo amount for cost neutral transfer
-    if event_out_type == 'transaction':
-      pseudo_fifo_amount = event_out['amount']
-
-      if pseudo_fifo_events_in_df.empty:
-        pseudo_fifo_events_in_df = fifo_events_in_df.copy()
-
-      # in USD
-      pseudo_neutral_amount = 0
-
-      for index_in, event_in in pseudo_fifo_events_in_df.iterrows():
-        height = event_in['height']
-
-        available_fifo = event_in['fifo_to_allocate']
-        purchase_price = event_in['price']
-
-        # fifo required is greater than fifo available in this event_in
-        if pseudo_fifo_amount + available_fifo < 0:
-          # cost neutral amount - will be rounded at the end
-          pseudo_neutral_amount += available_fifo * purchase_price / 1e8
-
-          # update remaining amount
-          pseudo_fifo_amount += available_fifo
-
-          # update in dataframe
-          pseudo_fifo_events_in_df = pseudo_fifo_events_in_df.drop([index_in])
-
-        # fifo required is smaller or equal fifo available in this event_in
-        # also used for clean up and break -> going to next event_out
-        else:
-          # cost neutral amount
-          pseudo_neutral_amount += -pseudo_fifo_amount * purchase_price / 1e8
-
-          # update remaining fifo in last event_in
-          available_fifo += pseudo_fifo_amount
-
-          # update event out
-          fifo_events_out_df.loc[index_out, 'pseudo_neutral_amount'] = round(pseudo_neutral_amount, 3)
- 
-          # break event in for loop
-          break
         
-
   # sanity checks
 
   # check that amount in equals amount out
@@ -293,10 +297,8 @@ for fifo_account in fifo_accounts:
   if fifo_in != fifo_out:
     error_flag = True
 
-
   # remaining fifo in should be equivalent to balance
   remaining_hnt = int(fifo_events_in_df[fifo_events_in_df['fifo_to_allocate'] > 0]['fifo_to_allocate'].sum())
-
 
   # get account for balance
   total_balance = 0
@@ -366,10 +368,4 @@ for fifo_account in fifo_accounts:
         logger.info(f'{fifo_account_name} - Comit - {event_in_id}')
       else:
         logger.warning(f'{fifo_account_name} - Comit - {event_in_id} - Already committed')
-    
-
-
-
-
-
 
