@@ -149,7 +149,7 @@ for fifo_account in fifo_accounts:
             rounded_realized_usd, realized_corr_usd = rounded_sum(event_in_fifo * (realized_price_usd - purchase_price_usd) / 1e8, realized_corr_usd, 3)
             rounded_realized_eur, realized_corr_eur = rounded_sum(event_in_fifo * (realized_price_eur - purchase_price_eur) / 1e8, realized_corr_eur, 3)
             
-            realized.append({'amount_usd': rounded_realized_usd, 'amount_eur': rounded_realized_eur, 'height': event_in_height, 'price': purchase_price_usd})
+            realized.append({'amount_usd': rounded_realized_usd, 'amount_eur': rounded_realized_eur, 'height': event_in_height, 'price_usd': purchase_price_usd, 'price_eur': purchase_price_eur})
 
           
           # update remaining amount
@@ -192,7 +192,7 @@ for fifo_account in fifo_accounts:
             rouned_realized_usd, realized_corr_usd = rounded_sum(-event_out_fifo * (realized_price_usd - purchase_price_usd) / 1e8, realized_corr_usd, 3)
             rouned_realized_eur, realized_corr_eur = rounded_sum(-event_out_fifo * (realized_price_eur - purchase_price_eur) / 1e8, realized_corr_eur, 3)
             
-            realized.append({'amount_usd': rouned_realized_usd, 'amount_eur': rouned_realized_eur, 'height': event_in_height, 'price': purchase_price_usd})
+            realized.append({'amount_usd': rouned_realized_usd, 'amount_eur': rouned_realized_eur, 'height': event_in_height, 'price_usd': purchase_price_usd, 'price_eur': purchase_price_eur})
 
           # update remaining fifo in last event_in
           event_in_fifo += event_out_fifo

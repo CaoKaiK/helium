@@ -39,7 +39,7 @@ for account in account_list:
   if event_list:
     event_df = pd.DataFrame(event_list)
     event_df['time'] = event_df['time'].dt.tz_localize(None)
-    event_df = event_df.sort_values(by=['time'])
+    event_df = event_df.sort_values(by=['height'])
 
     convert_df_to_datev(event_df.copy(), export_path_datev)
   else:
