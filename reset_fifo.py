@@ -1,55 +1,60 @@
-import os
 
 from utils.firebase_connection import init
 from utils.logger import get_logger
 
-import pandas as pd
-
 logger = get_logger('fifo')
 
 db = init()
-# load balance
-balance_hnt_ref = db.collection(u'balance_hnt')
 
-if True:
-  # reset balance_hnt
-  activities = db.collection(u'wallets').document(u'helium-wallet').collection(u'activities').stream()
+# read wallet and overwrite in fifo collection
+# , u'mining-ug'
+wallet_list = [u'temporary-wallet', u'private-wallet']
+
+fifo_ref = db.collection(u'fifo')
+
+for wallet_name in wallet_list:
+
+  logger.info(f'Reading wallet: {wallet_name}')
+  wallet_ref = db.collection(u'wallets').document(wallet_name)
+
+  wallet = wallet_ref.get()
+  wallet = wallet.to_dict()
+
+  wallet_address = wallet['address']
+  wallet_id = wallet_address[0:4]
+
+
+  # get fifo account to register activity in
+  fifo_accounts = db.collection(u'fifo').stream()
+  for fifo_account in fifo_accounts:
+    if wallet_address in fifo_account.to_dict().get('wallets', []):
+      fifo_account_name = fifo_account.to_dict().get('name')
+      # break on first match
+      break
+    else:
+      fifo_account_name = 'fallback'
+  
+  logger.info(f'Register events in: {fifo_account_name}')
+  fifo_ref = db.collection(u'fifo').document(fifo_account_name).collection(u'balance')
+  
+  activities = db.collection(u'wallets').document(wallet_name).collection(u'activities').stream()
 
   activities_list = []
   for activity in activities:
     activities_list.append(activity.to_dict())
-
-  print(len(activities_list))
-  prev_doc_id = ''
-  add_fee_hnt = 0
-  prev_fee_hnt = 0
+  
+  logger.info(f'Total events: {len(activities_list)}')
+  
   for activity in activities_list:
-    # enter event in fifo list
-    time = activity['time']
-    doc_id = time.strftime('%Y-%m-%dT%H:%M:%S')
-
-    if doc_id == prev_doc_id:
-      add_fee_hnt += prev_fee_hnt
-
-    prev_doc_id = doc_id
-
-    height = activity['height']
-    act_type = activity['type']
+    doc_id = str(activity['height']).zfill(10) + '_' + wallet_id
 
     if activity['amount'] > 0:
       fifo_to_allocate = activity['amount']
       fee_hnt = 0
 
-    elif activity.get('fee_hnt', 0) > 0:
-      fee_hnt = activity['fee_hnt']
-      if add_fee_hnt > 0:
-        fee_hnt += add_fee_hnt
-        print('Correction worked')
+    else:
+      fee_hnt = activity.get('fee_hnt', 0)
 
-        add_fee_hnt = 0
-      
-      prev_fee_hnt = fee_hnt
-      
       fifo_to_allocate = -fee_hnt
 
     fifo_event = {
@@ -57,14 +62,17 @@ if True:
               'year': activity['year'],
               'month': activity['month'],
               'day': activity['day'],
-              'height': height,
+              'height': activity['height'],
               'amount': activity['amount'],
               'fee_hnt': fee_hnt,
               'fee_usd': activity.get('fee_usd',0),
               'fifo_to_allocate': fifo_to_allocate,
               'price': activity['price'],
-              'type': act_type
+              'type': activity['type'],
+              'committed': False,
+              'wallet_id': wallet_id,
+              'has_eur': False
             }
-          
-    fifo_event_ref = balance_hnt_ref.document(doc_id)
-    fifo_event_ref.set(fifo_event)  
+
+    fifo_event_ref = fifo_ref.document(doc_id)
+    fifo_event_ref.set(fifo_event)

@@ -37,7 +37,7 @@ def classify_activity(activity, logger):
 
 def classify_wallet_activity(activity, wallet_address, logger):
   act_type = activity.get('type')
-  date = datetime.fromtimestamp(activity.get('time'))
+  date = datetime.utcfromtimestamp(activity.get('time'))
 
   # get oracle price on activity height
   height = activity.get('height')
@@ -187,7 +187,8 @@ def create_fifo_event(activity, wallet_id, logger):
     'price': activity['price'],
     'type': activity['type'],
     'committed': False,
-    'wallet_id': wallet_id
+    'wallet_id': wallet_id,
+    'has_eur': False
   }
 
   return fifo_event

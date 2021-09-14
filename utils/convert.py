@@ -148,7 +148,7 @@ def convert_df_to_datev(wallet_df, export_path):
   # dataframe
   datev_df = pd.DataFrame(columns=datev_col)
   
-  # monthly correction for amounts below 0.01$
+  # monthly correction for amounts below 0.01€
   running_balance = 0
 
   # iterate events in helium wallet
@@ -162,24 +162,24 @@ def convert_df_to_datev(wallet_df, export_path):
     ### MINING ###
     if row['type'] == 'mining':
       amount_hnt = row['amount']
-      price = row['price']
-      amount_usd = amount_hnt * price / 1e8
+      price = row['price_eur']
+      amount_currency = amount_hnt * price / 1e8
 
       # round amount to cents and cummulate difference in running balance
-      rounded_amount_usd = round(amount_usd, 2)
-      running_balance += amount_usd - rounded_amount_usd
+      rounded_amount_currency = round(amount_currency, 2)
+      running_balance += amount_currency - rounded_amount_currency
 
       # write mining entry only if rounded amount greater 0
-      if rounded_amount_usd > 0:
+      if rounded_amount_currency > 0:
         # prepare and append entry
-        entry = datev_row(rounded_amount_usd, 'S', 1500, 8100, datum, f'Mining|{amount_hnt/1e8:.4g} HNT|Block {height}|Kurs {price:.2f} $/HNT')
+        entry = datev_row(rounded_amount_currency, 'S', 1500, 8100, datum, f'Mining|{amount_hnt/1e8:.4g} HNT|Block {height}|Kurs {price:.2f} €/HNT')
         datev_df = datev_df.append(entry, ignore_index=True)
 
     ### TRANSFER ###
     elif row['type'] == 'transaction':
 
-      price_at_transaction = row['price']
-      transaction_fee_usd = row['fee_usd']
+      price_at_transaction = row['price_eur'] # 'price'
+      transaction_fee = row['fee_eur'] # 'fee_usd'
       transaction_fee_hnt = row['fee_hnt']
       
       ### --> OUTGOING --> ###
@@ -189,27 +189,27 @@ def convert_df_to_datev(wallet_df, export_path):
           # heights should match
           neutral_height = cost_neutral_part['height']
           earning_height = realized_part['height']
-          purchase_price = realized_part['price']
+          purchase_price = realized_part['price_eur'] # 'price'
           # amount hnt
           amount_hnt = cost_neutral_part['amount_hnt']
 
           # realized losses
           if realized_part['amount'] < 0:
             
-            entry = datev_row(cost_neutral_part['amount'], 'S', 2325, 1500, datum, f'Transaktion|Kostenneutr. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Anschf. Kurs {purchase_price:.2f} $/HNT')
+            entry = datev_row(cost_neutral_part['amount'], 'S', 2325, 1500, datum, f'Transaktion|Neutral|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Ein{purchase_price:.2f} €/HNT')
             datev_df = datev_df.append(entry, ignore_index=True)
 
-            entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 2326, 1100, datum, f'Transaktion|Real. Verl. b. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|akt. Kurs {price_at_transaction:.2f} $/HNT')
+            entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1100, 2326, datum, f'Transaktion|Verlust|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Aus {price_at_transaction:.2f} €/HNT')
             datev_df = datev_df.append(entry, ignore_index=True)
           else:
-            entry = datev_row(cost_neutral_part['amount'], 'S', 2726, 1500, datum, f'Transaktion|Kostenneutr. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Anschf. Kurs {purchase_price:.2f} $/HNT')
+            entry = datev_row(cost_neutral_part['amount'], 'S', 2726, 1500, datum, f'Transaktion|Neutral|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Ein {purchase_price:.2f} €/HNT')
             datev_df = datev_df.append(entry, ignore_index=True)
 
-            entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1100, 2725, datum, f'Transaktion|Real. Gew. b. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|akt. Kurs {price_at_transaction:.2f} $/HNT')
+            entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1100, 2725, datum, f'Transaktion|Gewinn|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Aus {price_at_transaction:.2f} €/HNT')
             datev_df = datev_df.append(entry, ignore_index=True)
         
-        # transaction fee in USD
-        entry = datev_row(transaction_fee_usd, 'S', 4909, 1100, datum, f'Transaktion|Transaktiongebühr in USD|Total: {transaction_fee_hnt/1e8:.4g} HNT')
+        # transaction fee
+        entry = datev_row(transaction_fee, 'S', 4909, 1100, datum, f'Transaktion|Transaktiongebuehr in €|Total: {transaction_fee_hnt/1e8:.4g} HNT')
         datev_df = datev_df.append(entry, ignore_index=True)
 
         # transfer HNT from helium to Binance Wallet
@@ -224,23 +224,23 @@ def convert_df_to_datev(wallet_df, export_path):
       ### <-- INCOMING <-- ###
       else:
         amount_hnt = row['amount']
-        price = row['price']
-        rounded_amount_usd = round(amount_hnt / 1e8 * price, 2)
+        price = row['price_eur'] # 'price'
+        rounded_amount = round(amount_hnt / 1e8 * price, 2)
         # prepare and append entry
-        entry = datev_row(rounded_amount_usd, 'S', 1500, 703, datum, f'Transfer auf Helium Wallet|{amount_hnt/1e8:.4g} HNT|Block {height}|Kurs {price:.2f} $/HNT')
+        entry = datev_row(rounded_amount, 'S', 1500, 703, datum, f'Transfer auf Helium Wallet|{amount_hnt/1e8:.4g} HNT|Block {height}|Kurs {price:.2f} €/HNT')
         datev_df = datev_df.append(entry, ignore_index=True)
 
     ### SERVICE ###
     elif row['type'] in ['transfer_hotspot', 'assert_location']:
 
-      price_at_transaction = row['price']
-      transaction_fee_usd = row['fee_usd']
+      price_at_transaction = row['price_eur'] # 'price'
+      transaction_fee = row['fee_eur'] # 'fee_usd
       transaction_fee_hnt = row['fee_hnt']
 
       if row['type'] == 'transfer_hotspot':
-        description = 'Uebertr. v. Router'
+        description = 'Kat. 1'
       elif row['type'] == 'assert_location':
-        description = 'Aend. Ort o. Antenne'
+        description = 'Kat. 2'
       else:
         description = 'Undefined'
 
@@ -248,29 +248,29 @@ def convert_df_to_datev(wallet_df, export_path):
         # heights should match
         neutral_height = cost_neutral_part['height']
         earning_height = realized_part['height']
-        purchase_price = realized_part['price']
+        purchase_price = realized_part['price_eur'] # 'price'
         # amount hnt
         amount_hnt = cost_neutral_part['amount_hnt']
         # realized losses
         if realized_part['amount'] < 0:
-          entry = datev_row(cost_neutral_part['amount'], 'S', 2325, 1500, datum, f'{description}|Kostenneutr. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Anschf. Kurs {purchase_price:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount'], 'S', 2325, 1500, datum, f'{description}|Neutral|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Ein {purchase_price:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
-          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 2326, 1100, datum, f'{description}|Real. Verl. b. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|akt. Kurs {price_at_transaction:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 2326, 1100, datum, f'{description}|Verlust|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Aus {price_at_transaction:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
         else:
-          entry = datev_row(cost_neutral_part['amount'], 'S', 2726, 1500, datum, f'{description}|Kostenneutr. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Anschf. Kurs {purchase_price:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount'], 'S', 2726, 1500, datum, f'{description}|Neutral|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Ein {purchase_price:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
-          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1100, 2725, datum, f'{description}|Real. Gew. b. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|akt. Kurs {price_at_transaction:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1100, 2725, datum, f'{description}|Gewinn|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Aus {price_at_transaction:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
         
       # transaction fee in USD
-      entry = datev_row(transaction_fee_usd, 'S', 4900, 1100, datum, f'{description}|Servicegebuehr in USD|Total:{transaction_fee_hnt/1e8:.4g} HNT')
+      entry = datev_row(transaction_fee, 'S', 4900, 1100, datum, f'{description}|Servicegebuehr in EUR|Total:{transaction_fee_hnt/1e8:.4g} HNT')
       datev_df = datev_df.append(entry, ignore_index=True)
 
     ### EXCHANGE ###
     elif row['type'] == 'exchange':
 
-      price_at_transaction = row['price']
+      price_at_transaction = row['price_eur'] # 'price'
       total_amount = row['amount']
       usd_eur = row['usd_eur']
 
@@ -279,7 +279,7 @@ def convert_df_to_datev(wallet_df, export_path):
         # heights should match
         neutral_height = cost_neutral_part['height']
         earning_height = realized_part['height']
-        purchase_price = realized_part['price']
+        purchase_price = realized_part['price_eur'] # 'price'
         # amount hnt
         amount_hnt = cost_neutral_part['amount_hnt']
         # USD balance
@@ -288,22 +288,22 @@ def convert_df_to_datev(wallet_df, export_path):
         # realized losses
         if realized_part['amount'] < 0:
           
-          entry = datev_row(cost_neutral_part['amount'], 'S', 2325, 1501, datum, f'Umtausch|Kostenneutr. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Anschf. Kurs {purchase_price:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount'], 'S', 2325, 1501, datum, f'Umtausch|Neutral|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Ein {purchase_price:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
-          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 2326, 1502, datum, f'Umtausch|Real. Verl. b. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|akt. Kurs {price_at_transaction:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 2326, 1502, datum, f'Umtausch|Verlust|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Aus {price_at_transaction:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
           
         else:
-          entry = datev_row(cost_neutral_part['amount'], 'S', 2726, 1501, datum, f'Umtausch|Kostenneutr. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Anschf. Kurs {purchase_price:.2f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount'], 'S', 2726, 1501, datum, f'Umtausch|Neutral|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Ein {purchase_price:.2f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
-          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1502, 2725, datum, f'Umtausch|Real. Gew. b. Abg.|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|akt. Kurs {price_at_transaction:.3f} $/HNT')
+          entry = datev_row(cost_neutral_part['amount']+realized_part['amount'], 'S', 1502, 2725, datum, f'Umtausch|Gewinn|{amount_hnt/1e8:.4g} HNT|Block {neutral_height}|Kurs Aus {price_at_transaction:.3f} €/HNT')
           datev_df = datev_df.append(entry, ignore_index=True)
       # TODO
       # Umtausch USD in EUR und Überweisung an Konto inkl. Überweisungskosten
-      entry = datev_row(balance_1502, 'S', 2726, 1502, datum, f'Umtausch|Kostenneutr. Abg.|{balance_1502:.2f} USDT')
+      entry = datev_row(balance_1502, 'S', 2726, 1502, datum, f'Umtausch|Neutral|{balance_1502:.2f} USDT')
       datev_df = datev_df.append(entry, ignore_index=True)
 
-      entry = datev_row(0, 'S', 1101, 2725, datum, f'Umtausch|Real. Gew. b. Abg.|{balance_1502:.2f} USDT|Kurs {usd_eur} USDT/€')
+      entry = datev_row(0, 'S', 1101, 2725, datum, f'Umtausch|Gewinn|{balance_1502:.2f} USDT|Kurs {usd_eur} USDT/€')
       datev_df = datev_df.append(entry, ignore_index=True)
 
       transaction_fee_eur = row['transaction_fee_eur']
@@ -327,7 +327,7 @@ def convert_df_to_datev(wallet_df, export_path):
     
   # running balance at end of month
   if round(running_balance, 2) > 0:
-    entry = datev_row(round(running_balance, 2), 'S', 1500, 8100, datum, f'Korrekturbuchung für Summe der Erträge kleiner 0.01$')
+    entry = datev_row(round(running_balance, 2), 'S', 1500, 8100, datum, f'Korrekturbuchung für Summe der Erträge kleiner 0.01€')
     datev_df = datev_df.append(entry, ignore_index=True)
 
   file_path = export_path + '.xlsx'
