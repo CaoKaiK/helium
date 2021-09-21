@@ -41,7 +41,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
   # get oracle price on activity height
   height = activity.get('height')
-  price = get_oracle_price(height, logger)
+  price_usd = get_oracle_price(height, logger)
   # generic activity dict
   activity_dict = {
     'hash': activity.get('hash'),
@@ -50,7 +50,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
     'month': date.month,
     'day': date.day,
     'height': height,
-    'price': price
+    'price_usd': price_usd
   }
 
   ### mining ###
@@ -78,7 +78,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
       # add payment fee
       fee_usd = fee / 1e5
-      fee_hnt = int(round(fee_usd / price * 1e8))
+      fee_hnt = int(round(fee_usd / price_usd * 1e8))
       activity_dict['fee'] = fee
       activity_dict['fee_usd'] = fee_usd
       activity_dict['fee_hnt'] = fee_hnt
@@ -94,7 +94,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
     fee = activity.get('fee')
     fee_usd = fee / 1e5
-    fee_hnt = int(round(fee_usd / price * 1e8))
+    fee_hnt = int(round(fee_usd / price_usd * 1e8))
 
     activity_dict['type'] = 'burning'
     activity_dict['amount'] = 0 
@@ -110,7 +110,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
       fee = activity.get('staking_fee') + activity.get('fee')
       fee_usd = fee / 1e5
-      fee_hnt = int(round(fee_usd / price * 1e8))
+      fee_hnt = int(round(fee_usd / price_usd * 1e8))
 
       activity_dict['type'] = 'assert_location'
       activity_dict['amount'] = 0
@@ -128,7 +128,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
       fee = activity.get('staking_fee') + activity.get('fee')
       fee_usd = fee / 1e5
-      fee_hnt = int(round(fee_usd / price * 1e8))
+      fee_hnt = int(round(fee_usd / price_usd * 1e8))
 
       activity_dict['type'] = 'add_gateway'
       activity_dict['amount'] = 0
@@ -145,7 +145,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
     if activity.get('buyer') == wallet_address:
       fee = activity.get('fee')
       fee_usd = fee / 1e5
-      fee_hnt = int(round(fee_usd / price * 1e8))
+      fee_hnt = int(round(fee_usd / price_usd * 1e8))
 
       activity_dict['type'] = 'transfer_hotspot'
       activity_dict['amount'] = 0
@@ -184,7 +184,7 @@ def create_fifo_event(activity, wallet_id, logger):
     'fee_hnt': activity.get('fee_hnt', 0),
     'fee_usd': activity.get('fee_usd',0),
     'fifo_to_allocate': fifo_to_allocate,
-    'price': activity['price'],
+    'price_usd': activity['price_usd'],
     'type': activity['type'],
     'committed': False,
     'wallet_id': wallet_id,

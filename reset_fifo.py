@@ -67,7 +67,7 @@ for wallet_name in wallet_list:
               'fee_hnt': fee_hnt,
               'fee_usd': activity.get('fee_usd',0),
               'fifo_to_allocate': fifo_to_allocate,
-              'price': activity['price'],
+              'price_usd': activity['price_usd'],
               'type': activity['type'],
               'committed': False,
               'wallet_id': wallet_id,

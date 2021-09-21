@@ -1,3 +1,7 @@
+from copy import deepcopy
+from logging import log
+
+from pandas.io.sql import table_exists
 from utils.helium_api import get_account
 from utils.firebase_connection import init
 from utils.logger import get_logger
@@ -21,7 +25,7 @@ db = init()
 
 # define list of accounts to update
 #  u'C&R' u'Temporary',
-account_list = [u'Temporary', u'C&R']
+account_list = [u'C&R']
 
 # stream fifo accounts
 fifo_accounts = db.collection(u'fifo').where(u'name', u'in', account_list).stream()
@@ -33,7 +37,7 @@ for fifo_account in fifo_accounts:
   fifo_events_ref = db.collection(u'fifo').document(fifo_account_name).collection(u'balance')
   fifo_exchanges_ref = db.collection(u'fifo').document(fifo_account_name).collection(u'exchanges')
 
-  # get all outgoing events that are not comitted yet and already posses a eur price
+  # get all outgoing events that are not Committed yet and already posses a eur price
   # fees from services, exchange
   fifo_events_out = fifo_events_ref.where(u'committed', u'==', False)\
     .where(u'has_eur', u'==', True)\
@@ -78,6 +82,20 @@ for fifo_account in fifo_accounts:
     fifo_events_in_df = pd.DataFrame(fifo_events_in_list).sort_values(by=['height'])
   else:
     fifo_events_in_df = pd.DataFrame()
+  
+  # get all transactions that are not yet fully accounted
+  # for with cost neutral amounts from exchanges
+  transactions = fifo_events_ref.where(u'type', u'==', 'transaction').get()
+  
+  if transactions:
+    transaction_list = []
+    for transaction in transactions:
+      if transaction.to_dict()['amount'] < 0:
+        transaction_list.append(transaction.to_dict())
+    
+    transactions_df = pd.DataFrame(transaction_list).sort_values(by=['height'])
+  else:
+    transactions_df = pd.DataFrame()
 
   # running balance for checksum
   fifo_out = 0
@@ -89,9 +107,7 @@ for fifo_account in fifo_accounts:
   # staged events
   staged_events_in_list = []
   staged_events_out_list = []
-
-  # empty pseudo fifo for transactions
-  pseudo_fifo_events_in_df = pd.DataFrame()
+  staged_transactions = []
 
   for index_out, event_out in fifo_events_out_df.iterrows():
     # get event ref for fifo changes
@@ -102,7 +118,7 @@ for fifo_account in fifo_accounts:
     event_out_height = event_out['height']
     event_out_type = event_out['type']
     event_out_fifo = event_out['fifo_to_allocate'] # needs to be allocated
-    realized_price_usd = event_out['price']
+    realized_price_usd = event_out['price_usd']
     realized_price_eur = event_out['price_eur']
     
     fifo_out += -event_out_fifo
@@ -130,7 +146,7 @@ for fifo_account in fifo_accounts:
       # fifo available for allocation from incoming event
       event_in_height = event_in['height']
       event_in_fifo = event_in['fifo_to_allocate']
-      purchase_price_usd = event_in['price']
+      purchase_price_usd = event_in['price_usd']
       purchase_price_eur = event_in['price_eur']
 
       # original query already filters for fifo > 0
@@ -144,12 +160,22 @@ for fifo_account in fifo_accounts:
           rounded_neutral_eur, cost_neutral_corr_eur = rounded_sum(event_in_fifo * purchase_price_eur / 1e8, cost_neutral_corr_eur, 3)
 
           if rounded_neutral_usd > 0 or rounded_neutral_eur > 0:
-            cost_neutral.append({'amount_usd': rounded_neutral_usd, 'amount_eur': rounded_neutral_eur, 'height': event_in_height, 'amount_hnt': event_in_fifo})
+            cost_neutral.append({
+              'amount_usd': rounded_neutral_usd,
+              'amount_eur': rounded_neutral_eur,
+              'height': event_in_height,
+              'amount_hnt': event_in_fifo
+              })
 
             rounded_realized_usd, realized_corr_usd = rounded_sum(event_in_fifo * (realized_price_usd - purchase_price_usd) / 1e8, realized_corr_usd, 3)
             rounded_realized_eur, realized_corr_eur = rounded_sum(event_in_fifo * (realized_price_eur - purchase_price_eur) / 1e8, realized_corr_eur, 3)
             
-            realized.append({'amount_usd': rounded_realized_usd, 'amount_eur': rounded_realized_eur, 'height': event_in_height, 'price_usd': purchase_price_usd, 'price_eur': purchase_price_eur})
+            realized.append({
+              'amount_usd': rounded_realized_usd,
+              'amount_eur': rounded_realized_eur,
+              'height': event_in_height,
+              'price_usd': purchase_price_usd,
+              'price_eur': purchase_price_eur})
 
           
           # update remaining amount
@@ -187,17 +213,27 @@ for fifo_account in fifo_accounts:
           rounded_neutral_eur, cost_neutral_corr_eur = rounded_sum(-event_out_fifo * purchase_price_eur / 1e8, cost_neutral_corr_eur, 3)
 
           if rounded_neutral_usd > 0 or rounded_neutral_usd > 0:
-            cost_neutral.append({'amount_usd': rounded_neutral_usd, 'amount_eur': rounded_neutral_eur, 'height': event_in_height, 'amount_hnt': -event_out_fifo})
+            cost_neutral.append({
+              'amount_usd': rounded_neutral_usd,
+              'amount_eur': rounded_neutral_eur,
+              'height': event_in_height,
+              'amount_hnt': -event_out_fifo
+              })
             
             rouned_realized_usd, realized_corr_usd = rounded_sum(-event_out_fifo * (realized_price_usd - purchase_price_usd) / 1e8, realized_corr_usd, 3)
             rouned_realized_eur, realized_corr_eur = rounded_sum(-event_out_fifo * (realized_price_eur - purchase_price_eur) / 1e8, realized_corr_eur, 3)
             
-            realized.append({'amount_usd': rouned_realized_usd, 'amount_eur': rouned_realized_eur, 'height': event_in_height, 'price_usd': purchase_price_usd, 'price_eur': purchase_price_eur})
+            realized.append({
+              'amount_usd': rouned_realized_usd,
+              'amount_eur': rouned_realized_eur,
+              'height': event_in_height,
+              'price_usd': purchase_price_usd,
+              'price_eur': purchase_price_eur
+              })
 
           # update remaining fifo in last event_in
           event_in_fifo += event_out_fifo
           fifo_in += -event_out_fifo
-          event_out_fifo = 0
 
           # checkpoint
           if event_in_height > event_out_height:
@@ -245,60 +281,63 @@ for fifo_account in fifo_accounts:
             event_out_snap = fifo_exchanges_ref.document(event_out_id.replace('_', '')).get()
             
             event_out_dict = event_out_snap.to_dict()
-          
-          # if event is a transaction calculate fifo amount
-          # as if the transaction was an exchange
-          # same function applies but fifo is not commited to events
-          elif event_out['type'] == 'transaction':
-            pseudo_fifo_amount = event_out['amount']
 
-            if pseudo_fifo_events_in_df.empty:
-              pseudo_fifo_events_in_df = fifo_events_in_df.copy()
+            # update previous transactions
+            # fill transaction amount with cost neutral
+            cost_neutral_copy = deepcopy(cost_neutral)
 
-            
-            pseudo_neutral_amount_usd = 0
-            pseudo_neutral_amount_eur = 0
+            for index, transaction in transactions_df.iterrows():
+              transaction_id = str(transaction['height']).zfill(10) + '_' + transaction['wallet_id']
+              cost_neutral_amount_usd = 0
+              cost_neutral_amount_eur = 0
+              transfer_amount_init = transaction['amount'] 
+              transfer_amount = transaction.get('fifo_neutral', transfer_amount_init)
 
-            for index_in, event_in in pseudo_fifo_events_in_df.iterrows():
-              height = event_in['height']
+              # fill transaction until no events in this exchange
+              # or transfer amount = 0 for this transaction
+              while cost_neutral_copy and transfer_amount < 0:
+                neutral_event = cost_neutral_copy.pop(0)
 
-              available_fifo = event_in['fifo_to_allocate']
-              purchase_price_usd = event_in['price']
-              purchase_price_eur = event_in['price_eur']
+                # reduce transfer amount by neutral event HNT consumption
+                # transfer amount is negative
+                transfer_amount += neutral_event['amount_hnt']
 
-              # fifo required is greater than fifo available in this event_in
-              if pseudo_fifo_amount + available_fifo < 0:
-                # cost neutral amount - will be rounded at the end
-                pseudo_neutral_amount_usd += available_fifo * purchase_price_usd / 1e8
-                pseudo_neutral_amount_eur += available_fifo * purchase_price_eur / 1e8
+                # event has more HNT than required cut and save
+                # rest for next transaction
+                if transfer_amount > 0:
+                  partial_amount = transfer_amount 
+                  transfer_amount = 0
+                  # calculate remaining neutral amounts for remaining HNT
+                  partial_amount_usd = partial_amount / neutral_event['amount_hnt'] * neutral_event['amount_usd']
+                  partial_amount_eur = partial_amount / neutral_event['amount_hnt'] * neutral_event['amount_eur']
 
-                # update remaining amount
-                pseudo_fifo_amount += available_fifo
+                  neutral_event['amount_usd'] -= partial_amount_usd
+                  neutral_event['amount_eur'] -= partial_amount_eur
+                  # insert at beginning of cost_neutral_copy list
+                  # for next transaction
+                  cost_neutral_copy.insert(0,{
+                    'amount_hnt': partial_amount,
+                    'amount_usd': partial_amount_usd,
+                    'amount_eur': partial_amount_eur
+                  })
+                  
+                # add cost neutral amounts to counter
+                cost_neutral_amount_usd += neutral_event['amount_usd']
+                cost_neutral_amount_eur += neutral_event['amount_eur']
 
-                # update in dataframe
-                pseudo_fifo_events_in_df = pseudo_fifo_events_in_df.drop([index_in])
+              # conclude transactions
+              transactions_df.loc[index, 'fifo_neutral'] = transfer_amount
 
-              # fifo required is smaller or equal fifo available in this event_in
-              # also used for clean up and break -> going to next event_out
-              else:
-                # cost neutral amount
-                pseudo_neutral_amount_usd += -pseudo_fifo_amount * purchase_price_usd / 1e8
-                pseudo_neutral_amount_eur += -pseudo_fifo_amount * purchase_price_eur / 1e8
+              if cost_neutral_amount_usd > 0 or cost_neutral_amount_eur > 0:
+                transaction_dict = {
+                  'event_id': transaction_id,
+                  'cost_neutral_amount_usd': round(cost_neutral_amount_usd, 3),
+                  'cost_neutral_amount_eur': round(cost_neutral_amount_eur, 3),
+                  'fifo_neutral': transfer_amount
+                }
+                staged_transactions.append(transaction_dict)
+                logger.debug(f'{fifo_account_name} - Staged - Cost Neutral Amount {transfer_amount} HNT for Transaction {transaction_id} - {cost_neutral_amount_usd:.3f}USD | {cost_neutral_amount_eur:.3f} EUR')
 
-                # update remaining fifo in last event_in
-                available_fifo += pseudo_fifo_amount
-
-                # update event out
-                fifo_events_out_df.loc[index_out, 'pseudo_neutral_amount_usd'] = round(pseudo_neutral_amount_usd, 3)
-                fifo_events_out_df.loc[index_out, 'pseudo_neutral_amount_eur'] = round(pseudo_neutral_amount_eur, 3)
-
-                event_out_dict = {}
-                event_out_dict['pseudo_neutral_amount_usd'] = round(pseudo_neutral_amount_usd, 3)
-                event_out_dict['pseudo_neutral_amount_eur'] = round(pseudo_neutral_amount_eur, 3)
-
-                # break event in for loop
-                break
-                
           else:
             event_out_dict = {}
 
@@ -397,7 +436,30 @@ for fifo_account in fifo_accounts:
 
   debug = pd.DataFrame(staged_events_out_list)
 
+
+
+
   if not error_flag:
+    # commit transactions
+    for transaction_commit in staged_transactions:
+      transaction_id = transaction_commit['event_id']
+      print(transaction_commit)
+      transaction_ref = db.collection(u'fifo').document(fifo_account_name).collection(u'balance').document(transaction_id)
+
+      transaction = transaction_ref.get()
+      previous_amount_usd = transaction.to_dict().get('cost_neutral_amount_usd', 0)
+      previous_amount_eur = transaction.to_dict().get('cost_neutral_amount_eur', 0)
+
+      cost_neutral_amount_usd = previous_amount_usd + transaction_commit['cost_neutral_amount_usd']
+      cost_neutral_amount_eur = previous_amount_eur + transaction_commit['cost_neutral_amount_eur']
+
+      logger.debug(f'{fifo_account_name} - Try Commit Transaction - {transaction_id}')
+
+      transaction_ref.update({
+            'cost_neutral_amount_usd': cost_neutral_amount_usd,
+            'cost_neutral_amount_eur': cost_neutral_amount_eur,
+            'fifo_neutral': transaction_commit['fifo_neutral'] 
+          })
     # commit to db
     for event_out_commit in staged_events_out_list:
       event_out_id = event_out_commit['event_id']
@@ -405,7 +467,7 @@ for fifo_account in fifo_accounts:
 
       event_out = event_out_ref.get()
 
-      logger.debug(f'{fifo_account_name} - Try Comit - {event_out_id}')
+      logger.debug(f'{fifo_account_name} - Try Commit - {event_out_id}')
 
       # event already exists
       # e.g. service fees
@@ -413,7 +475,7 @@ for fifo_account in fifo_accounts:
         # do not overwrite or update committed events
         if not event_out.to_dict()['committed']:
           event_out_ref.update(event_out_commit)
-          logger.info(f'{fifo_account_name} - Comit Existing Event Out - {event_out_id}')
+          logger.info(f'{fifo_account_name} - Commit Existing Event Out - {event_out_id}')
 
         else:
           logger.warning(f'{fifo_account_name} - Failed Event Out- {event_out_id} - Already committed')
@@ -422,7 +484,7 @@ for fifo_account in fifo_accounts:
       else:
         # write result to balance
         event_out_ref.set(event_out_commit)
-        logger.info(f'{fifo_account_name} - Comit Exchange Event to Event Out - {event_out_id}')
+        logger.info(f'{fifo_account_name} - Commit Exchange Event to Event Out - {event_out_id}')
 
         event_out_exchange_ref = fifo_exchanges_ref.document(event_out_id.replace('_', ''))
         # update event in exchange
@@ -430,7 +492,7 @@ for fifo_account in fifo_accounts:
           'fifo_to_allocate': 0,
           'committed': True
         })
-        logger.info(f'{fifo_account_name} - Comit Exchange Event- {event_out_id}')
+        logger.info(f'{fifo_account_name} - Commit Exchange Event- {event_out_id}')
         
     
     for event_in_commit in staged_events_in_list:
@@ -443,7 +505,7 @@ for fifo_account in fifo_accounts:
       # unless it is part of a partial transaction
       if not event_in.to_dict()['committed'] or event_in.to_dict().get('partial', True):
         event_in_ref.update(event_in_commit)
-        logger.info(f'{fifo_account_name} - Comit Event In - {event_in_id}')
+        logger.info(f'{fifo_account_name} - Commit Event In - {event_in_id}')
       else:
-        logger.warning(f'{fifo_account_name} - Failed Comit In - {event_in_id} - Already committed')
+        logger.warning(f'{fifo_account_name} - Failed Commit In - {event_in_id} - Already committed')
 

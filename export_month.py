@@ -14,11 +14,12 @@ account_list = [u'C&R']#, u'Temporary']
 
 # month
 eval_year = 2021
-eval_month = 7
+eval_month = 6
 
 for account in account_list:
   # load config file and stream wallets
   fifo_balance_ref = db.collection(u'fifo').document(account).collection(u'balance')
+  fifo_corrections_ref = db.collection(u'fifo').document(account).collection(u'corrections')
 
   # path without extension
   abspath = os.path.dirname(os.path.abspath(__file__))
@@ -30,11 +31,15 @@ for account in account_list:
 
   # read events from db
   events = fifo_balance_ref.where(u'year', u'==', eval_year).where(u'month', u'==', eval_month).get()
+  corrections = fifo_corrections_ref.where(u'year', u'==', eval_year).where(u'month', u'==', eval_month).get()
 
   # construct dataframe
   event_list = []
   for event in events:
     event_list.append(event.to_dict())
+
+  for correction in corrections:
+    event_list.append(correction.to_dict())
 
   if event_list:
     event_df = pd.DataFrame(event_list)

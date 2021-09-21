@@ -59,7 +59,7 @@ for fifo_account in fifo_accounts:
     fifo_event = fifo_event.to_dict()
     year = fifo_event['year']
     month = fifo_event['month']
-    price = fifo_event['price']
+    price_usd = fifo_event['price_usd']
     fee_usd = fifo_event.get('fee_usd', 0)
 
     height = fifo_event['height']
@@ -73,7 +73,7 @@ for fifo_account in fifo_accounts:
 
     event_ref.update({
       'eur_usd': eur_usd,
-      'price_eur': round(price / eur_usd, 5),
+      'price_eur': round(price_usd / eur_usd, 5),
       'fee_eur': round(fee_usd / eur_usd, 5),
       'has_eur': True
     })
