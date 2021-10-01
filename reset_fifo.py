@@ -7,7 +7,7 @@ logger = get_logger('fifo')
 db = init()
 
 # read wallet and overwrite in fifo collection
-# , u'temporary-wallet', u'private-wallet'
+# , u'temporary-wallet', u'private-wallet' u'mining-ug',
 wallet_list = [u'mining-ug']
 
 fifo_ref = db.collection(u'fifo')

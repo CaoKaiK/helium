@@ -6,6 +6,7 @@ from utils.helium_api import get_account
 from utils.firebase_connection import init
 from utils.logger import get_logger
 
+import math
 import pandas as pd
 
 def rounded_sum(value, collector, precision):
@@ -25,7 +26,7 @@ db = init()
 
 # define list of accounts to update
 #  u'C&R' u'Temporary',
-account_list = [u'C&R']
+account_list = [u'C&R', u'Temporary']
 
 # stream fifo accounts
 fifo_accounts = db.collection(u'fifo').where(u'name', u'in', account_list).stream()
@@ -290,22 +291,35 @@ for fifo_account in fifo_accounts:
               transaction_id = str(transaction['height']).zfill(10) + '_' + transaction['wallet_id']
               cost_neutral_amount_usd = 0
               cost_neutral_amount_eur = 0
-              transfer_amount_init = transaction['amount'] 
-              transfer_amount = transaction.get('fifo_neutral', transfer_amount_init)
+              transfer_amount_init = transaction['amount']
+              
+              if math.isnan(transaction.get('fifo_neutral', transfer_amount_init)):
+                transfer_amount = transfer_amount_init
+              else:
+                transfer_amount = transaction.get('fifo_neutral', transfer_amount_init)
+
+              logger.debug(f'{fifo_account_name} - Init: {int(transfer_amount_init)} - Prev: {int(transfer_amount)}')
+              
+
 
               # fill transaction until no events in this exchange
-              # or transfer amount = 0 for this transaction
+              # or transfer amount = 0 for this transaction.
+              total_amount_transferred = 0
               while cost_neutral_copy and transfer_amount < 0:
                 neutral_event = cost_neutral_copy.pop(0)
 
                 # reduce transfer amount by neutral event HNT consumption
                 # transfer amount is negative
-                transfer_amount += neutral_event['amount_hnt']
+                avail_amount = neutral_event['amount_hnt']
+                transfer_amount += avail_amount
+
+
 
                 # event has more HNT than required cut and save
                 # rest for next transaction
                 if transfer_amount > 0:
-                  partial_amount = transfer_amount 
+                  partial_amount = transfer_amount
+                  avail_amount -= partial_amount 
                   transfer_amount = 0
                   # calculate remaining neutral amounts for remaining HNT
                   partial_amount_usd = partial_amount / neutral_event['amount_hnt'] * neutral_event['amount_usd']
@@ -320,6 +334,9 @@ for fifo_account in fifo_accounts:
                     'amount_usd': partial_amount_usd,
                     'amount_eur': partial_amount_eur
                   })
+                
+                total_amount_transferred += avail_amount
+                logger.debug(f'{fifo_account_name} - Updated: Reduced {int(avail_amount)} Remaining {int(transfer_amount)} Total {int(total_amount_transferred)}')
                   
                 # add cost neutral amounts to counter
                 cost_neutral_amount_usd += neutral_event['amount_usd']
@@ -336,8 +353,14 @@ for fifo_account in fifo_accounts:
                   'fifo_neutral': transfer_amount
                 }
                 staged_transactions.append(transaction_dict)
-                logger.debug(f'{fifo_account_name} - Staged - Cost Neutral Amount {transfer_amount} HNT for Transaction {transaction_id} - {cost_neutral_amount_usd:.3f}USD | {cost_neutral_amount_eur:.3f} EUR')
+                logger.debug(f'{fifo_account_name} - Staged - Cost Neutral Amount {total_amount_transferred} HNT for Transaction {transaction_id} - {cost_neutral_amount_usd:.3f}USD | {cost_neutral_amount_eur:.3f} EUR')
 
+                if total_amount_transferred <= 0:
+                  logger.warning(f'{fifo_account_name} - Invalid amount for neutral transfer: {total_amount_transferred} HNT')
+                  error_flag = True
+                if cost_neutral_amount_eur < 0:
+                  logger.warning(f'{fifo_account_name} - Invalid amount for neutral transfer: {cost_neutral_amount_eur} EUR')
+                  error_flag = True
           else:
             event_out_dict = {}
 

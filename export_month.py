@@ -14,7 +14,7 @@ account_list = [u'C&R']#, u'Temporary']
 
 # month
 eval_year = 2021
-eval_month = 6
+eval_month = 9
 
 for account in account_list:
   # load config file and stream wallets
