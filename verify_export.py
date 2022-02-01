@@ -2,9 +2,12 @@ import os
 import pandas as pd
 import openpyxl
 
+import logging
 from utils.logger import get_logger
 
-logger = get_logger('verify')
+formatter = logging.Formatter('%(message)s')
+
+logger = get_logger('verify', formatter)
 
 class account:
   def __init__(self, number, description):
@@ -54,6 +57,8 @@ export_list = [
   'datev_C&R_2021-8.xlsx',
   'datev_C&R_2021-9.xlsx',
   'datev_C&R_2021-10.xlsx',
+  'datev_C&R_2021-11.xlsx',
+  'datev_C&R_2021-12.xlsx'
 ]
 
 export_df = pd.DataFrame()
@@ -90,7 +95,7 @@ logger.debug('-----------------------------------------')
 for account in accounts:
   logger.debug('Account:')
   logger.debug(f'{account.number} - {account.description}')
-  logger.debug(f'{account.total_in()} - {account.total_out()}')
+  logger.debug(f'|{account.total_in()} || {account.total_out()}|')
   logger.debug(f'{account.balance()}')
 
 # checks
@@ -102,6 +107,9 @@ logger.debug(f'Helium EUR 1100 - Fremdleistung 4909: {service_balance}')
 
 neutral_service = round(accounts[12].total_in() + accounts[14].total_in() - accounts[6].total_out() -accounts[7].total_out(), 2)
 logger.debug(f'2726 + 2325 - Binance HNT 1501 - Binance USDT 1502: {neutral_service}')
+
+neutral_balance = round(accounts[2].total_out() - accounts[5].total_in() - neutral_service, 2)
+logger.debug(f'1500 - 1363 - Neutral Service: {neutral_balance}')
 
 
 

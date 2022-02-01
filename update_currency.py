@@ -32,7 +32,11 @@ latest_exchange = exchange_rates_df[exchange_rates_df['date'] == exchange_rates_
 # recreate dt from time
 year = latest_exchange['year'].values[0]
 month = latest_exchange['month'].values[0]
-latest_exchange_dt = datetime(year, month + 1, latest_exchange['day'].values[0])
+
+if month == 12:
+  latest_exchange_dt = datetime( year+1, 1, 1)
+else:
+  latest_exchange_dt = datetime(year, month, 1)
 
 logger.info(f'Latest exchange value pair: {year} - {month}')
 
