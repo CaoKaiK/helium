@@ -34,9 +34,9 @@ year = latest_exchange['year'].values[0]
 month = latest_exchange['month'].values[0]
 
 if month == 12:
-  latest_exchange_dt = datetime( year+1, 1, 1)
+  latest_exchange_dt = datetime(year+1, 1, 1)
 else:
-  latest_exchange_dt = datetime(year, month, 1)
+  latest_exchange_dt = datetime(year, month+1, 1)
 
 logger.info(f'Latest exchange value pair: {year} - {month}')
 
@@ -71,7 +71,7 @@ for fifo_account in fifo_accounts:
     event_id = str(height).zfill(10) + '_' + wallet_id
 
     eur_usd = exchange_rates_df[(exchange_rates_df['year'] == year) & (exchange_rates_df['month'] == month )]['eur_usd'].values[0]
-
+    
     event_ref = fifo_events_ref.document(event_id)
 
 

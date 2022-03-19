@@ -52,13 +52,8 @@ accounts = [
 ]
 
 export_list = [
-  'datev_C&R_2021-6.xlsx',
-  'datev_C&R_2021-7.xlsx',
-  'datev_C&R_2021-8.xlsx',
-  'datev_C&R_2021-9.xlsx',
-  'datev_C&R_2021-10.xlsx',
-  'datev_C&R_2021-11.xlsx',
-  'datev_C&R_2021-12.xlsx'
+  'datev_C&R_2022-1_Freber.xlsx',
+  'datev_C&R_2022-2.xlsx'
 ]
 
 export_df = pd.DataFrame()

@@ -466,7 +466,7 @@ for fifo_account in fifo_accounts:
     # commit transactions
     for transaction_commit in staged_transactions:
       transaction_id = transaction_commit['event_id']
-      print(transaction_commit)
+      # print(transaction_commit)
       transaction_ref = db.collection(u'fifo').document(fifo_account_name).collection(u'balance').document(transaction_id)
 
       transaction = transaction_ref.get()

@@ -1,7 +1,48 @@
 import time
 import requests
 
+from utils.logger import get_logger
+
+# daily log files send to wallets directory
+logger_api = get_logger('api')
+
 BASE_URL = 'https://api.helium.io/v1'
+
+headers = {
+  'user-agent': 'python-requests/2.25.1'
+}
+
+def get_account(account_address):
+  '''
+  gets information on an account. Mainly balance
+  '''
+
+  url = f'{BASE_URL}/accounts/{account_address}'
+  
+  i = 0
+  timeout = 0
+  while i < 10:
+    # relax
+    time.sleep(max(2 ** (i-1), timeout/1000+1))
+    # request
+    r = requests.get(url, headers=headers)
+    logger_api.debug(f'Get {i+1}/10 - Account - {r.status_code}')
+
+    data_json = r.json()
+    account = data_json.get('data')
+
+    if r.status_code == 200:
+      break
+    elif r.status_code == 429:
+      timeout = r.json().get('come_back_in_ms', 0)
+      logger_api.debug(f'Timeout - {timeout/1000}')
+    i += 1
+
+  if r.status_code != 200:
+    print(f'Can not retrieve balance - {r.status_code}')
+    account = []
+  
+  return account
 
 def get_activities(address, logger, cursor='', get='hotspot'):
   '''
@@ -17,16 +58,23 @@ def get_activities(address, logger, cursor='', get='hotspot'):
     params = {'cursor': cursor}
   else:
     params = {}
-  
-  r = requests.get(url, params=params)
 
   i = 0
-  while r.status_code != 200 and i < 10:
-    logger.warning(f'get_activities - Retry {i} on Status Code {r.status_code}')
-    time.sleep(2 ** (i-1))
-    r = requests.get(url, params=params)
+  timeout = 0
+  while i < 10:
+    # relax
+    time.sleep(max(2 ** (i-1), timeout/1000+1))
+    # request
+    r = requests.get(url, params=params, headers=headers)
+    logger_api.debug(f'Get {i+1}/10 - Activity - {r.status_code}')
+
+    if r.status_code == 200:
+      break
+    elif r.status_code == 429:
+      timeout = r.json().get('come_back_in_ms', 0)
+      logger_api.debug(f'Timeout - {timeout/1000}')
+
     i += 1
-    
 
   if r.status_code == 200:
     data_json = r.json()
@@ -39,33 +87,12 @@ def get_activities(address, logger, cursor='', get='hotspot'):
       cursor = ''
 
   else:
-    logger.warning(f'get_activities - Failes on Status Code {r.status_code}')
+    logger.warning(f'get_activities - Failed on Status Code {r.status_code}')
     activities = []
     cursor = ''
 
   return activities, cursor
 
-
-def get_account(account_address):
-  '''
-  gets information on an account. Mainly balance
-  '''
-
-  url = f'{BASE_URL}/accounts/{account_address}'
-  
-  r = requests.get(url)
-
-  data_json = r.json()
-
-  if r.status_code == 200:
-
-    account = data_json.get('data')
-
-  else:
-    print(r.status_code)
-    account = []
-  
-  return account
 
 def get_oracle_price(height, logger):
   '''
@@ -76,13 +103,21 @@ def get_oracle_price(height, logger):
   '''
   url = f'{BASE_URL}/oracle/prices/{height}'
 
-  r = requests.get(url)
 
   i = 0
-  while r.status_code != 200 and i < 10:
-    logger.warning(f'get_activities - Retry {i} on Status Code {r.status_code}')
-    time.sleep(2 ** (i-1))
+  timeout = 0
+  while i < 10:
+    # relax
+    time.sleep(max(2 ** (i-1),timeout/1000+1))
+    # request
     r = requests.get(url)
+    logger_api.debug(f'Get {i+1}/10 - Price - {r.status_code}')
+
+    if r.status_code == 200:
+      break
+    elif r.status_code == 429:
+      timeout = r.json().get('come_back_in_ms', 0)
+      logger_api.debug(f'Timeout - {timeout/1000}')
     i += 1
 
   if r.status_code == 200:
@@ -102,13 +137,20 @@ def get_height(time):
 
   params = {'max_time': time.isoformat()}
 
-  r = requests.get(url, params=params)
-
   i = 0
-  while r.status_code != 200 and i < 10:
-    # logger.warning(f'get_activities - Retry {i} on Status Code {r.status_code}')
-    time.sleep(2 ** (i-1))
-    r = requests.get(url, params=params)
+  timeout = 0
+  while i < 10:
+    # relax
+    time.sleep(max(2**(i-1),timeout/1000+1))
+    # request
+    r = requests.get(url, params=params, headers=headers)
+    logger_api.debug(f'Get {i+1}/10 - Height - {r.status_code}')
+
+    if r.status_code == 200:
+      break
+    elif r.status_code == 429:
+      timeout = r.json().get('come_back_in_ms', 0)
+      logger_api.debug(f'Timeout - {timeout/1000}')
     i += 1
 
   if r.status_code == 200:

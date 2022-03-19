@@ -6,17 +6,17 @@ from requests.api import get
 from utils.helium_api import get_height
 from utils.firebase_connection import init
 
-height = 1155205
-day = 27
-month = 12
-year = 2021
+height = 1206790
+day = 31
+month = 1
+year = 2022
 
-amount_eur = [0.15, 0.18]
-target = [2726, 1502]
-origin = [1501, 2725]
+amount_eur = [0.01, 0.01]
+target = [2726, 1100]
+origin = [1500, 2725]
 description = [
-  'Umtausch|Neutral|0.0049 HNT|Block 1147707|Kurs Ein 30.491 €/HNT',
-  'Umtausch|Gewinn|0.0049 HNT|Block 1147707|Kurs Aus 36.798 €/HNT'
+  'Typ 2|Neutral|0.0004 HNT|Block 1202242|Kurs Ein 24.521 €/HNT',
+  'Typ 2|Gewinn|0.0004 HNT|Block 1202242|Kurs Aus 24.880 €/HNT',
 ]
 
 db = init()

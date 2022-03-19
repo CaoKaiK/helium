@@ -13,8 +13,8 @@ db = init()
 account_list = [u'C&R']#, u'Temporary']
 
 # month
-eval_year = 2021
-eval_month = 12
+eval_year = 2022  
+eval_month = 2
 
 for account in account_list:
   # load config file and stream wallets
