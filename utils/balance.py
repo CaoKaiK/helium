@@ -1,15 +1,39 @@
 from copy import deepcopy
 
 def outstanding_corrections(last_height, corrections_ref):
-  # get corrections still to be applied
+  '''
+  calculates the amount of outstandings correction from the firebase reference path where all corrections are stored.
+
+  args:
+  last_height: int of last height where balance was committed
+  corrections_ref: firebase reference to all corrections
+
+  returns:
+  corrections_outstanding: int of amount of bones outstanding to be committed
+  '''
+  # get corrections after last height
   corrections = corrections_ref.where(u'height', u'>', last_height).stream()
   corrections_outstanding = 0
+  # iterate and sum up
   for correction in corrections:
     corrections_outstanding += correction.to_dict()['fee_hnt']
   
   return corrections_outstanding
 
 def make_correction(last_outgoing_activity, correction_amount, corrections_ref):
+  '''
+  makes a deepcopy of the last outgoing activity (meaning it had a fee greater 0) and resets most keys to zero.
+  Only features such as height, hash, time, etc. are kept so that the resulting activity can later be matched to the original activity
+
+  args:
+  last_outgoing_activity: dict of last activity with a fee greater 0
+  correction_amount: int of amount of bones that the outgoing event needs to be corrected with
+  corrections_ref: firebase reference to where all corrections are saved
+
+  returns:
+  True
+  
+  '''
   # copy last outgoing activity
   correction = deepcopy(last_outgoing_activity)
   # modify key values
@@ -28,6 +52,20 @@ def make_correction(last_outgoing_activity, correction_amount, corrections_ref):
 
 
 def run_balance(last_balance, last_height, activities_staged, corrections_ref):
+  '''
+  also see balance_fifo.run_balance
+  updates the balance of activities that have been staged and applies corrections to the balance where necessary
+
+  args:
+    last_balance: int representing the last committed balance
+    last_height: int with height of last committed balance
+    activities_staged: list of dicts with staged activities
+    corrections_ref: firebase reference to where all corrections are saved
+  
+  returns:
+    activities_for_commit: list of activities with updated balance and applied correction to be committed
+
+  '''
   # get corrections that need to be applied to this collection of staged activities
   corrections = corrections_ref.where(u'height', u'>', last_height).stream()
   correction_list = []
@@ -62,36 +100,3 @@ def run_balance(last_balance, last_height, activities_staged, corrections_ref):
     activities_for_commit.append(activity_staged)
 
   return activities_for_commit
-
-
-  # # get activities later than latest balance run
-  # activities = activities_ref.where(u'height', u'>', balance_height).get()
-
-  # last_fee = {}
-
-  # if activities:
-  #   # iterate activities and add current balance to activity
-  #   for activity in activities:
-  #     activity = activity.to_dict()
-  #     height = activity.get('height')
-  #     hash_act = activity.get('hash')
-  #     amount = activity.get('amount', 0)
-  #     fee_hnt = activity.get('fee_hnt', 0)
-
-  #     if fee_hnt > 0:
-  #       last_fee = activity
-      
-
-  #     last_balance += amount - fee_hnt
-
-  #     # update activity
-  #     activity_ref = activities_ref.document(f'{height}_{hash_act}')
-
-  #     activity_ref.update({u'current_balance': last_balance})
-
-  # else:
-  #   activity = {}
-
-  # return last_balance, activity, last_fee
-
-

@@ -1,5 +1,6 @@
 def run_balance(activities_ref, balance_height, last_balance):
   '''
+  also see balance.run_balance
   updates activities with a running balance. Starting from the last known balance.
 
   args:

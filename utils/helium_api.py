@@ -3,7 +3,7 @@ import requests
 
 from utils.logger import get_logger
 
-# daily log files send to wallets directory
+# log api calls
 logger_api = get_logger('api')
 
 BASE_URL = 'https://api.helium.io/v1'
