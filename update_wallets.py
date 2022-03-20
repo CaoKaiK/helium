@@ -121,6 +121,7 @@ for wallet in wallets:
           # sum of all staged amounts should be equal to difference between last and current balance
           amount_staged = amount_staged + act_amount - act_fee_hnt
           logger.info(f'{wallet_name} - Staged: {act_amount/1e8:.8f} from {act_type} on block {height}')
+          
 
         else:
           logger.info(f'{wallet_name} - Skipping known transaction with no balance change')
@@ -173,7 +174,7 @@ for wallet in wallets:
         missing_amount = 0
     
     # correction worked or was not necessary
-    if missing_amount == 0:
+    if  missing_amount == 0:
       # get latest correction reference
       corrections_ref =  db.collection(u'wallets').document(wallet_name).collection(u'corrections')
       # run balance

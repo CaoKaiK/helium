@@ -7,12 +7,12 @@ from utils.helium_api import get_height
 from utils.firebase_connection import init
 
 # info
-transaction_datetime = dt(2022, 2, 28, 14, 47, 0)
-amount_hnt = 15.3
-usd_hnt = 23.9509
-usd_eur = 0.889545
-transaction_amount = 325.97
-transaction_fee = 6.60
+transaction_datetime = dt(2022, 3, 10, 13, 13, 0)
+amount_hnt = 16.41
+usd_hnt = 21.1378
+usd_eur = 0.902397
+transaction_amount = 313.02
+transaction_fee = 6.53
 
 print(transaction_datetime)
 #print(transaction_datetime.isoformat())

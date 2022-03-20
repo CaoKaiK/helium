@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from utils.helium_api import get_oracle_price
+from utils.helium_api import get_oracle_price, get_rewards
 
+# hotspot response
 def classify_activity(activity, logger):
   act_type = activity.get('type')
   date = datetime.fromtimestamp(activity.get('time'))
@@ -35,6 +36,7 @@ def classify_activity(activity, logger):
 
   return activity_dict
 
+# wallet response
 def classify_wallet_activity(activity, wallet_address, logger):
   act_type = activity.get('type')
   date = datetime.utcfromtimestamp(activity.get('time'))
@@ -56,8 +58,11 @@ def classify_wallet_activity(activity, wallet_address, logger):
   ### mining ###
   if act_type in ['rewards_v2', 'rewards_v1']:
     amount = 0
+
+    rewards = get_rewards(wallet_address, height)
+
     # iterate multiple rewards in one block
-    for reward in activity.get('rewards'):
+    for reward in rewards:
       amount += reward['amount']
 
     # add type and amount to activity

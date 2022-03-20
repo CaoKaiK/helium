@@ -20,10 +20,12 @@ def get_account(account_address):
   url = f'{BASE_URL}/accounts/{account_address}'
   
   i = 0
-  timeout = 0
+  timeout = 1000
   while i < 10:
     # relax
+    #logger_api.debug(f'Start Sleep - Account')
     time.sleep(max(2 ** (i-1), timeout/1000+1))
+    #logger_api.debug(f'End Sleep - Account')
     # request
     r = requests.get(url, headers=headers)
     logger_api.debug(f'Get {i+1}/10 - Account - {r.status_code}')
@@ -35,7 +37,7 @@ def get_account(account_address):
       break
     elif r.status_code == 429:
       timeout = r.json().get('come_back_in_ms', 0)
-      logger_api.debug(f'Timeout - {timeout/1000}')
+      logger_api.warning(f'Timeout - {timeout/1000}')
     i += 1
 
   if r.status_code != 200:
@@ -52,7 +54,7 @@ def get_activities(address, logger, cursor='', get='hotspot'):
   if get=='hotspot':
     url = f'{BASE_URL}/hotspots/{address}/activity'
   else:
-    url = f'{BASE_URL}/accounts/{address}/activity'
+    url = f'{BASE_URL}/accounts/{address}/roles'
 
   if cursor:
     params = {'cursor': cursor}
@@ -60,10 +62,12 @@ def get_activities(address, logger, cursor='', get='hotspot'):
     params = {}
 
   i = 0
-  timeout = 0
-  while i < 10:
+  timeout = 1000
+  while i < 20:
     # relax
-    time.sleep(max(2 ** (i-1), timeout/1000+1))
+    #logger_api.debug(f'Start Sleep - Activity')
+    time.sleep(max(2 ** (i-1), timeout/1000+10))
+    #logger_api.debug(f'End Sleep - Activity')
     # request
     r = requests.get(url, params=params, headers=headers)
     logger_api.debug(f'Get {i+1}/10 - Activity - {r.status_code}')
@@ -72,7 +76,7 @@ def get_activities(address, logger, cursor='', get='hotspot'):
       break
     elif r.status_code == 429:
       timeout = r.json().get('come_back_in_ms', 0)
-      logger_api.debug(f'Timeout - {timeout/1000}')
+      logger_api.warning(f'Timeout - {timeout/1000}')
 
     i += 1
 
@@ -93,6 +97,30 @@ def get_activities(address, logger, cursor='', get='hotspot'):
 
   return activities, cursor
 
+def get_rewards(address, height):
+  '''
+  get rewards for a specific account at a specific block
+
+  '''
+  url = f'{BASE_URL}/accounts/{address}/rewards/{height}'
+
+  i = 0
+  timeout = 0
+  while i < 10:
+    time.sleep(max(2 ** (i-1),timeout/1000))
+    r = requests.get(url)
+    logger_api.debug(f'Get {i+1}/10 - Reward - {r.status_code}')
+    
+    if r.status_code == 200:
+      data = r.json().get('data')
+      break
+    elif r.status_code == 429:
+      timeout = r.json().get('come_back_in_ms', 0)
+      logger_api.warning(f'Timeout - {timeout/1000}')
+      data = []
+    i += 1
+  
+  return data
 
 def get_oracle_price(height, logger):
   '''
@@ -108,7 +136,9 @@ def get_oracle_price(height, logger):
   timeout = 0
   while i < 10:
     # relax
-    time.sleep(max(2 ** (i-1),timeout/1000+1))
+    #logger_api.debug(f'Start Sleep - Price')
+    time.sleep(max(2 ** (i-1),timeout/1000))
+    #logger_api.debug(f'End Sleep - Price')
     # request
     r = requests.get(url)
     logger_api.debug(f'Get {i+1}/10 - Price - {r.status_code}')
@@ -117,7 +147,7 @@ def get_oracle_price(height, logger):
       break
     elif r.status_code == 429:
       timeout = r.json().get('come_back_in_ms', 0)
-      logger_api.debug(f'Timeout - {timeout/1000}')
+      logger_api.warning(f'Timeout - {timeout/1000}')
     i += 1
 
   if r.status_code == 200:
@@ -126,7 +156,7 @@ def get_oracle_price(height, logger):
 
   return price
 
-def get_height(time):
+def get_height(time_in):
   '''
   get latest block at time
   
@@ -135,13 +165,15 @@ def get_height(time):
   '''
   url = f'{BASE_URL}/blocks/height'
 
-  params = {'max_time': time.isoformat()}
+  params = {'max_time': time_in.isoformat()}
 
   i = 0
   timeout = 0
   while i < 10:
     # relax
-    time.sleep(max(2**(i-1),timeout/1000+1))
+    #logger_api.debug(f'Start Sleep - Height')
+    time.sleep(max(2**(i-1),timeout/1000))
+    #logger_api.debug(f'End Sleep - Height')
     # request
     r = requests.get(url, params=params, headers=headers)
     logger_api.debug(f'Get {i+1}/10 - Height - {r.status_code}')
@@ -150,7 +182,7 @@ def get_height(time):
       break
     elif r.status_code == 429:
       timeout = r.json().get('come_back_in_ms', 0)
-      logger_api.debug(f'Timeout - {timeout/1000}')
+      logger_api.warning(f'Timeout - {timeout/1000}')
     i += 1
 
   if r.status_code == 200:
