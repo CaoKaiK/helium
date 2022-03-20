@@ -369,42 +369,10 @@ def convert_df_to_datev(wallet_df, export_path):
       type_e = row['type']
       print(f'Error in Export {type_e}')
 
-    
-  # # running balance at end of month
-  # if round(running_balance, 2) > 0:
-  #   entry = datev_row(round(running_balance, 2), 'S', 1500, 8100, datum, f'Korrekturbuchung für Summe der Erträge kleiner 0.01€')
-  #   datev_df = datev_df.append(entry, ignore_index=True)
 
   datev_df = datev_df[datev_df['Umsatz (ohne Soll/Haben-Kz)']>0]
 
   file_path = export_path + '.xlsx'
   datev_df.to_excel(file_path, index=False, startrow=1)
-
-  # # modify header
-  # wb = openpyxl.load_workbook(file_path)
-  # ws = wb.active
-
-  # ws['A1'] = 'EXTF'
-  # ws['B1'] = 700
-  # ws['C1'] = 21
-  # ws['D1'] = 'Buchungsstapel'
-  # ws['E1'] = 11
-  # ws['F1'] = datetime.now().strftime('%Y%m%d%H%M%S000')
-  # # G1
-  # ws['H1'] = 'RE'
-  # ws['I1'] = 'Niklas Cao'
-  # ws['K1'] = 0
-  # ws['L1'] = 10007
-  # ws['M1'] = date(date.today().year, 1, 1).strftime('%Y%m%d')
-  # ws['N1'] = '?'
-  # ws['O1'] = date(year, month, 1).strftime('%Y%m%d')
-  # ws['P1'] = date(year, month, calendar.monthrange(year, month)[-1]).strftime('%Y%m%d')
-  # ws['Q1'] = 'Helium'
-  # ws['S1'] = 1
-  # ws['T1'] = 0
-  # ws['U1'] = 0
-  # ws['V1'] = 'USD'
-
-  # wb.save(file_path)
 
   return None
