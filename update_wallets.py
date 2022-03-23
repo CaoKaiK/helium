@@ -11,8 +11,8 @@ logger = get_logger('wallets')
 db = init()
 
 # define list of wallets to update
-#u'helium-wallet' 
-wallet_list = [u'temporary-wallet', u'private-wallet', u'mining-ug']
+#u'helium-wallet' u'temporary-wallet', u'private-wallet']#
+wallet_list = [u'mining-ug']
 
 # load config file and stream wallets
 config_ref = db.collection(u'config').document(u'config')

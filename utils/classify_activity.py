@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from utils.helium_api import get_oracle_price, get_rewards
+from utils.helium_api import get_oracle_price, get_rewards, get_transaction
 
 # hotspot response
 def classify_activity(activity, logger):
@@ -39,6 +39,7 @@ def classify_activity(activity, logger):
 # wallet response
 def classify_wallet_activity(activity, wallet_address, logger):
   act_type = activity.get('type')
+  hash = activity.get('hash')
   date = datetime.utcfromtimestamp(activity.get('time'))
 
   # get oracle price on activity height
@@ -46,7 +47,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
   price_usd = get_oracle_price(height, logger)
   # generic activity dict
   activity_dict = {
-    'hash': activity.get('hash'),
+    'hash': hash,
     'time': date,
     'year': date.year,
     'month': date.month,
@@ -59,6 +60,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
   if act_type in ['rewards_v2', 'rewards_v1']:
     amount = 0
 
+    # request rewards at height via API
     rewards = get_rewards(wallet_address, height)
 
     # iterate multiple rewards in one block
@@ -72,14 +74,17 @@ def classify_wallet_activity(activity, wallet_address, logger):
   ### transaction ###
   elif act_type in ['payment_v2', 'payment_v1']:
     amount = 0
+
+    transaction = get_transaction(hash)
+
     # iterate multiple payments in one block
-    for payment in activity.get('payments'):
+    for payment in transaction.get('payments'):
       amount += payment.get('amount')
 
     # reverse for outgoing transactions
-    if activity.get('payer') == wallet_address:
+    if transaction.get('payer') == wallet_address:
       amount = amount * -1
-      fee = activity.get('fee')
+      fee = transaction.get('fee')
 
       # add payment fee
       fee_usd = fee / 1e5

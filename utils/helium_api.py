@@ -14,18 +14,22 @@ headers = {
 
 def get_account(account_address):
   '''
-  gets information on an account. Mainly balance
+  gets information on an account to retrieve the current balance and the current height
+  
+  args: 
+  account_address: string of account address
+  
+  returns:
+  account: dict of account, balance and height are inside
   '''
 
   url = f'{BASE_URL}/accounts/{account_address}'
   
   i = 0
-  timeout = 1000
+  timeout = 0
   while i < 10:
     # relax
-    #logger_api.debug(f'Start Sleep - Account')
-    time.sleep(max(2 ** (i-1), timeout/1000+1))
-    #logger_api.debug(f'End Sleep - Account')
+    time.sleep(max(2**i-1, timeout/1000))
     # request
     r = requests.get(url, headers=headers)
     logger_api.debug(f'Get {i+1}/10 - Account - {r.status_code}')
@@ -44,11 +48,23 @@ def get_account(account_address):
     print(f'Can not retrieve balance - {r.status_code}')
     account = []
   
+  #check response
+  if type(account.get('balance')) != int:
+    raise ValueError('Balance is not of type int')
+  elif not(account.get('balance') > 0):
+    raise ValueError('Balance not greater 0')
+  elif type(account.get('block')) != int:
+    raise ValueError('Block is not of type int')
+  elif not(account.get('block') > 0):
+    raise ValueError('Block not greater 0')
+  
   return account
 
 def get_activities(address, logger, cursor='', get='hotspot'):
   '''
-  gets the list of activities for a hotspot or wallet. Cursor points to the set of paginated data.
+  previously: /activity -> changed to roles
+
+  get activities that happend on either a hotspot or an account.
   '''
 
   if get=='hotspot':
@@ -62,12 +78,10 @@ def get_activities(address, logger, cursor='', get='hotspot'):
     params = {}
 
   i = 0
-  timeout = 1000
+  timeout = 0
   while i < 20:
     # relax
-    #logger_api.debug(f'Start Sleep - Activity')
-    time.sleep(max(2 ** (i-1), timeout/1000+10))
-    #logger_api.debug(f'End Sleep - Activity')
+    time.sleep(max(2**i-1, timeout/1000))
     # request
     r = requests.get(url, params=params, headers=headers)
     logger_api.debug(f'Get {i+1}/10 - Activity - {r.status_code}')
@@ -101,33 +115,66 @@ def get_rewards(address, height):
   '''
   get rewards for a specific account at a specific block
 
+  args:
+  address: string of account
+  height: int of height of the rewards
+
+  returns:
+  rewards: list of rewards at height
+
   '''
   url = f'{BASE_URL}/accounts/{address}/rewards/{height}'
 
   i = 0
   timeout = 0
   while i < 10:
-    time.sleep(max(2 ** (i-1),timeout/1000))
+    time.sleep(max(2**i-1, timeout/1000))
     r = requests.get(url)
     logger_api.debug(f'Get {i+1}/10 - Reward - {r.status_code}')
     
     if r.status_code == 200:
-      data = r.json().get('data')
+      rewards = r.json().get('data')
       break
     elif r.status_code == 429:
       timeout = r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
-      data = []
+      rewards = []
     i += 1
   
-  return data
+  return rewards
+
+def get_transaction(hash):
+  '''
+  '''
+  url = f'{BASE_URL}/transactions/{hash}'
+
+  i = 0
+  timeout = 0
+  while i < 10:
+    time.sleep(max(2**i-1, timeout/1000))
+    r = requests.get(url)
+    logger_api.debug(f'Get {i+1}/10 - Transaction - {r.status_code}')
+
+    if r.status_code == 200:
+      transaction = r.json().get('data')
+      break
+    elif r.status_code == 429:
+      timeout = r.json().get('come_back_in_ms', 0)
+      logger_api.warning(f'Timeout - {timeout/1000}')
+      transaction = []
+    i += 1
+  
+  return transaction
 
 def get_oracle_price(height, logger):
   '''
   get oracle price for block in USD
 
   args:
-  block: provides the oracle price at a specific block and at which block it initially took effect.
+  height: int of requested height
+
+  returns:
+  price: float of price at requested height
   '''
   url = f'{BASE_URL}/oracle/prices/{height}'
 
@@ -136,9 +183,7 @@ def get_oracle_price(height, logger):
   timeout = 0
   while i < 10:
     # relax
-    #logger_api.debug(f'Start Sleep - Price')
-    time.sleep(max(2 ** (i-1),timeout/1000))
-    #logger_api.debug(f'End Sleep - Price')
+    time.sleep(max(2**i-1, timeout/1000))
     # request
     r = requests.get(url)
     logger_api.debug(f'Get {i+1}/10 - Price - {r.status_code}')
@@ -171,9 +216,7 @@ def get_height(time_in):
   timeout = 0
   while i < 10:
     # relax
-    #logger_api.debug(f'Start Sleep - Height')
-    time.sleep(max(2**(i-1),timeout/1000))
-    #logger_api.debug(f'End Sleep - Height')
+    time.sleep(max(2**i-1, timeout/1000))
     # request
     r = requests.get(url, params=params, headers=headers)
     logger_api.debug(f'Get {i+1}/10 - Height - {r.status_code}')
