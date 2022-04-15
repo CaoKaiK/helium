@@ -40,7 +40,7 @@ def get_account(account_address):
     if r.status_code == 200:
       break
     elif r.status_code == 429:
-      timeout = r.json().get('come_back_in_ms', 0)
+      timeout = 1000 #timeout = r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
     i += 1
 
@@ -89,7 +89,7 @@ def get_activities(address, logger, cursor='', get='hotspot'):
     if r.status_code == 200:
       break
     elif r.status_code == 429:
-      timeout = r.json().get('come_back_in_ms', 0)
+      timeout = 1000 #timeout = r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
 
     i += 1
@@ -131,12 +131,12 @@ def get_rewards(address, height):
     time.sleep(max(2**i-1, timeout/1000))
     r = requests.get(url)
     logger_api.debug(f'Get {i+1}/10 - Reward - {r.status_code}')
-    
+
     if r.status_code == 200:
       rewards = r.json().get('data')
       break
-    elif r.status_code == 429:
-      timeout = r.json().get('come_back_in_ms', 0)
+    else:
+      timeout = 1000 #r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
       rewards = []
     i += 1
@@ -159,7 +159,7 @@ def get_transaction(hash):
       transaction = r.json().get('data')
       break
     elif r.status_code == 429:
-      timeout = r.json().get('come_back_in_ms', 0)
+      timeout = 1000 #timeout = r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
       transaction = []
     i += 1
@@ -191,7 +191,7 @@ def get_oracle_price(height, logger):
     if r.status_code == 200:
       break
     elif r.status_code == 429:
-      timeout = r.json().get('come_back_in_ms', 0)
+      timeout = 1000 #timeout = r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
     i += 1
 
@@ -224,7 +224,7 @@ def get_height(time_in):
     if r.status_code == 200:
       break
     elif r.status_code == 429:
-      timeout = r.json().get('come_back_in_ms', 0)
+      timeout = 1000 #timeout = r.json().get('come_back_in_ms', 0)
       logger_api.warning(f'Timeout - {timeout/1000}')
     i += 1
 

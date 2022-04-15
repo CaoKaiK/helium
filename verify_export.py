@@ -53,7 +53,8 @@ accounts = [
 
 export_list = [
   'datev_C&R_2022-1_Freber.xlsx',
-  'datev_C&R_2022-2.xlsx'
+  'datev_C&R_2022-2.xlsx',
+  'datev_C&R_2022-3.xlsx'
 ]
 
 export_df = pd.DataFrame()
