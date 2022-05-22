@@ -116,9 +116,12 @@ def classify_wallet_activity(activity, wallet_address, logger):
 
   elif act_type in ['assert_location_v2', 'assert_location_v1']:
     # check if payed by wallet owner
-    if activity.get('payer') == activity.get('owner'):
-
-      fee = activity.get('staking_fee') + activity.get('fee')
+    if activity.get('role') == 'payer':
+      
+      # after api update no longer available
+      # fee = activity.get('staking_fee') + activity.get('fee')
+      # static fee now
+      fee = 1000000 + 55000
       fee_usd = fee / 1e5
       fee_hnt = int(round(fee_usd / price_usd * 1e8))
 
