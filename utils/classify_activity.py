@@ -56,6 +56,7 @@ def classify_wallet_activity(activity, wallet_address, logger):
     'price_usd': price_usd
   }
 
+
   ### mining ###
   if act_type in ['rewards_v2', 'rewards_v1']:
     amount = 0
@@ -66,6 +67,10 @@ def classify_wallet_activity(activity, wallet_address, logger):
     # iterate multiple rewards in one block
     for reward in rewards:
       amount += reward['amount']
+
+    ## manual block
+    if height == 1439329:
+      amount = 626236
 
     # add type and amount to activity
     activity_dict['type'] = 'mining'
