@@ -175,6 +175,18 @@ def classify_wallet_activity(activity, wallet_address, logger):
       # payed by someone else
       activity_dict = {}
 
+  elif act_type in ['transfer_hotspot_v2']:
+    fee = 40000 # fixed transfer fee
+    fee_usd = fee / 1e5
+    fee_hnt = int(round(fee_usd / price_usd * 1e8))
+
+    activity_dict['type'] = 'transfer_hotspot'
+    activity_dict['amount'] = 0
+    activity_dict['fee'] = fee
+    activity_dict['fee_usd'] = fee_usd    
+    activity_dict['fee_hnt'] = fee_hnt
+
+
   else:
     logger.error(f'Unknown activity in classify_activity: {act_type}')
     activity_dict = {}
