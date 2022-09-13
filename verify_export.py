@@ -59,6 +59,7 @@ export_list = [
   'datev_C&R_2022-5.xlsx',
   'datev_C&R_2022-6.xlsx',
   'datev_C&R_2022-7.xlsx',
+  'datev_C&R_2022-8.xlsx',
 ]
 
 export_df = pd.DataFrame()
