@@ -203,6 +203,7 @@ def create_fifo_event(activity, wallet_id, logger):
           
   else:
      logger.warning(f'Activity has no amount to be evaluated in FIFO')
+     fifo_to_allocate = 0
   
   fifo_event = {
     'time': activity['time'],
