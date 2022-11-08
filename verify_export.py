@@ -60,6 +60,8 @@ export_list = [
   'datev_C&R_2022-6.xlsx',
   'datev_C&R_2022-7.xlsx',
   'datev_C&R_2022-8.xlsx',
+  'datev_C&R_2022-9.xlsx',
+  'datev_C&R_2022-10.xlsx',
 ]
 
 export_df = pd.DataFrame()
@@ -67,7 +69,7 @@ for export_file in export_list:
   path = os.path.join('export', 'datev', export_file)
   part_df = pd.read_excel(path, header=None, skiprows=2, usecols=[0, 6, 7], names=['amount', 'target', 'origin'])
 
-  export_df = export_df.append(part_df, ignore_index=True)
+  export_df = pd.concat([export_df, part_df])
 
 
 
